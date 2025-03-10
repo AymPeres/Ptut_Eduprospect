@@ -26,7 +26,6 @@ export default {
   justify-content: center; /* Centre horizontalement le groupe de boutons */
   align-items: center;     /* Aligne verticalement (si besoin) */
   gap: 3rem;              /* Espace horizontal entre les deux boutons */
-  margin-top: 3rem;       /* Espace depuis le haut (logo / titre) */
 }
 
 /* Styles pour les boutons */
