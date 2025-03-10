@@ -1,55 +1,65 @@
 <template>
-  <div class="admin-layout">
-    <header>
-      <img
-        src="@/assets/images/logoIsis/logo-ISIS-horizontal-BLANC-rogne.png"
-        alt="Logo Eduprospect"
-        class="logo"
-      />
-      <h1 class="title">Eduprospect</h1>
-    </header>
-    <main>
-      <router-view />
-    </main>
+  <div class="container">
+    <!-- Bouton "Espace Formulaire" en deux lignes -->
+    <router-link to="/formulaire" class="button">
+      Espace<br />
+      Formulaire
+    </router-link>
+
+    <!-- Bouton "Espace Administrateur" en deux lignes -->
+    <router-link to="/admin" class="button">
+      Espace<br />
+      Administrateur
+    </router-link>
   </div>
 </template>
 
 <script>
 export default {
-  name: "AdminLayout",
-  // Tu peux ajouter data(), computed, methods, etc. ici si nécessaire
+  name: "IndexPage",
 };
 </script>
 
 <style scoped>
-.admin-layout {
-  background: #2F2769;
-  min-height: 100vh;
-  color: #fff;
+.container {
   display: flex;
-  flex-direction: column;
+  justify-content: center; /* Centre horizontalement le groupe de boutons */
+  align-items: center;     /* Aligne verticalement (si besoin) */
+  gap: 3rem;              /* Espace horizontal entre les deux boutons */
+  margin-top: 3rem;       /* Espace depuis le haut (logo / titre) */
 }
 
-header {
-  display: flex;
-  align-items: center;       /* centre verticalement */
-  justify-content: center;   /* centre horizontalement */
-  padding: 1rem;
-}
+/* Styles pour les boutons */
+.button {
+  /* Permet d'empiler le texte sur plusieurs lignes */
+  display: inline-flex;
+  flex-direction: column; /* Met "Espace" au-dessus de "Formulaire" ou "Administrateur" */
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 
-.logo {
-  height: 300px;
-  margin-right: 1rem;
-}
+  /* Taille fixe pour rendre les boutons identiques */
+  width: 220px;
+  height: 80px;
 
-.title {
-  font-size: 1.8rem;
+  /* Style du bouton */
+  background-color: #FA7268;
+  color: #ffffff;
+  font-size: 1.2rem;
   font-weight: bold;
-  margin: 0;
+  line-height: 1.2;       /* Contrôle l'espacement entre les lignes */
+  padding: 0.5rem;        /* Petite marge intérieure */
+  border: none;
+  border-radius: 100px;
+  text-decoration: none;
+
+  /* Transition (effet hover) */
+  transition: background 0.3s ease, transform 0.2s;
 }
 
-main {
-  flex: 1;
-  padding: 2rem;
+/* Au survol : couleur plus foncée + léger zoom */
+.button:hover {
+  background-color: #d95a50;
+  transform: scale(1.05);
 }
 </style>
