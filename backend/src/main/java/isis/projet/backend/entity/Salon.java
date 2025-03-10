@@ -1,8 +1,8 @@
 package isis.projet.backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 import java.util.List;
 
@@ -11,6 +11,7 @@ import java.util.List;
 @NoArgsConstructor
 @RequiredArgsConstructor
 @ToString
+@EqualsAndHashCode(exclude = "inscriptions")
 @Entity
 @Table(name = "salons")
 public class Salon {
@@ -19,13 +20,11 @@ public class Salon {
     private Integer id;
 
     @NotBlank
-    @NotEmpty
     @Column(nullable = false)
     @NonNull
     private String nom;
 
     @NotBlank
-    @NotEmpty
     @Column(nullable = false)
     @NonNull
     private String ville;
@@ -34,6 +33,7 @@ public class Salon {
     @NonNull
     private Integer annee;
 
-    @OneToMany(mappedBy = "salon", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "salon", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore  // Évite la boucle infinie dans les réponses JSON
     private List<Inscription> inscriptions;
 }

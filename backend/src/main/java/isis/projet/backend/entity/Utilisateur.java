@@ -1,8 +1,8 @@
 package isis.projet.backend.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 
 @Getter
@@ -18,20 +18,19 @@ public class Utilisateur {
     private Integer id;
 
     @NotBlank
-    @NotEmpty
+    @Email  // Vérifie que l'email est valide
     @Column(unique = true, nullable = false)
     @NonNull
     private String email;
 
     @NotBlank
-    @NotEmpty
     @Column(name = "mot_de_passe", nullable = false)
     @NonNull
-    private String motDePasse;
+    private String motDePasse;  // ⚠ Il faudra le hacher avant de l'enregistrer
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private Role role;
+    private Role role = Role.user;  // Par défaut, un utilisateur est "user"
 
     public enum Role {
         admin, user
