@@ -1,11 +1,17 @@
-<script setup>
-
-</script>
-
 <template>
-  <router-view></router-view>
+  <div class="admin-layout">
+    <header>
+      <!-- Tu peux afficher ici le logo et le titre si nécessaire -->
+      <h1>Admin Zone</h1>
+    </header>
+    <main>
+      <router-view />
+    </main>
+  </div>
 </template>
 
-<style scoped>
-
-</style>
+<script>
+export default {
+  name: "AdminLayout",
+};
+</script>
