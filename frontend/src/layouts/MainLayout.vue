@@ -2,11 +2,6 @@
   <div class="admin-layout">
     <header>
       <h1 class="title">Eduprospect</h1>
-      <img
-        src="@/assets/images/logoIsis/logo-ISIS-horizontal-BLANC-rogne.png"
-        alt="Logo Eduprospect"
-        class="logo"
-      />
     </header>
 
     <main>
@@ -26,32 +21,28 @@ export default {
 @import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700&display=swap");
 
 .admin-layout {
-  background: #2F2769;
+  /* Fond violet + image en background */
   min-height: 100vh;
+  background-color: #2F2769;
+  background-image: url("@/assets/images/logoIsis/logo-ISIS-horizontal-BLANC-rogne.png");
+  background-repeat: no-repeat;
+  background-position: center;  /* Centre l'image au milieu */
+  background-size: 35%;         /* Ajuste la taille de l'image (en %) ou "cover"/"contain" */
+
+  /* Mise en page générale */
   color: #fff;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-header {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 2rem;
-}
-
 .title {
-  font-family: "Plus Jakarta Sans", sans-serif; /* Application de la police */
+  font-family: "Plus Jakarta Sans", sans-serif;
   font-size: 3rem;
   font-weight: bold;
+  margin-top: 2rem;
   margin-bottom: 1rem;
   color: #FA7268;
-}
-
-.logo {
-  height: 250px;
-  margin-bottom: 1rem;
 }
 
 main {

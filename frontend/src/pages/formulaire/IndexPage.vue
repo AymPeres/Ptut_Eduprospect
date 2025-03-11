@@ -7,7 +7,7 @@
     </router-link>
 
     <!-- Bouton "Espace Administrateur" en deux lignes -->
-    <router-link to="/admin" class="button">
+    <router-link to="/admin/login" class="button">
       Espace<br />
       Administrateur
     </router-link>
@@ -24,11 +24,10 @@ export default {
 .container {
   display: flex;
   justify-content: center; /* Centre horizontalement le groupe de boutons */
-  align-items: center;     /* Aligne verticalement (si besoin) */
-  gap: 3rem;              /* Espace horizontal entre les deux boutons */
+  align-items: center;     /* Aligne verticalement les boutons */
+  gap: 3rem;               /* Espacement entre les deux boutons */
 }
 
-/* Styles pour les boutons */
 .button {
   /* Permet d'empiler le texte sur plusieurs lignes */
   display: inline-flex;
@@ -56,7 +55,6 @@ export default {
   transition: background 0.3s ease, transform 0.2s;
 }
 
-/* Au survol : couleur plus foncée + léger zoom */
 .button:hover {
   background-color: #d95a50;
   transform: scale(1.05);
