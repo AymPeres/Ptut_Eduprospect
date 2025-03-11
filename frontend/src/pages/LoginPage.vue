@@ -35,7 +35,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;      /* Centre verticalement dans l'espace dispo */
+  justify-content: flex-start;      /* Centre verticalement dans l'espace dispo */
   min-height: 10vh;            /* Ajuste pour positionner par rapport au logo */
   max-width: 600px;            /* Largeur max de la « boîte » du formulaire */
   margin: 0 auto;              /* Centre horizontalement */
@@ -48,7 +48,9 @@ export default {
   font-size: 1.4rem;
   margin-bottom: 1.5rem;
   text-align: center;
+  font-weight: bold;           /* Met le texte en gras */
 }
+
 
 /* 4) Le formulaire en colonne, centré */
 .login-form {
