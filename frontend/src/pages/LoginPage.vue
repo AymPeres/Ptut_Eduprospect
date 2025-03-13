@@ -3,17 +3,11 @@
     <h2 class="login-title">Entrez votre mot de passe</h2>
 
     <form class="login-form">
-      <!-- Champ de mot de passe -->
-      <input
-        type="password"
-        class="password-input"
-        placeholder="Mot de passe"
-      />
+      <input type="password" class="password-input" placeholder="Mot de passe" />
 
-      <!-- Actions : lien "mot de passe oublié ?" + bouton "Se connecter" -->
       <div class="login-actions">
         <a href="#" class="forgot-link">mot de passe oublié ?</a>
-        <button type="button" class="login-button">Se connecter</button>
+        <button type="button" class="login-button" @click="goToAdmin">Se connecter</button>
       </div>
     </form>
   </div>
@@ -22,9 +16,14 @@
 <script>
 export default {
   name: "LoginPage",
-  // Pas de logique JS pour l'instant, uniquement le visuel
+  methods: {
+    goToAdmin() {
+      this.$router.push("/adminlayout"); // Redirige vers la page admin
+    },
+  },
 };
 </script>
+
 
 <style scoped>
 /* 1) Import de la police Plus Jakarta Sans */
