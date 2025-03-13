@@ -7,7 +7,9 @@
 
       <div class="login-actions">
         <a href="#" class="forgot-link">mot de passe oublié ?</a>
-        <button type="button" class="login-button" @click="goToAdmin">Se connecter</button>
+        <router-link to="/admin" class="login-button">Se connecter</router-link>
+
+
       </div>
     </form>
   </div>

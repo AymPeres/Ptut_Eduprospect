@@ -12,3 +12,5 @@ INSERT INTO inscriptions (nom, prenom, formation, ville, code_postal, email, tel
 
 INSERT INTO utilisateurs (email, mot_de_passe, role) VALUES
     ('admin@isis.fr', 'motdepasse123', 'admin');
+
+

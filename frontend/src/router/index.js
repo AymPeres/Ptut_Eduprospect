@@ -23,8 +23,15 @@ const router = createRouter({
       ],
     },
     {
-      path: "/adminlayout",
+      path: "/admin",
       component: () => import("@/layouts/AdminLayout.vue"),
+      children: [
+        {
+          path: "",
+          name: "AdminIndex",
+          component: () => import("@/pages/admin/IndexPage.vue"),
+        },
+      ],
     },
   ],
 });
