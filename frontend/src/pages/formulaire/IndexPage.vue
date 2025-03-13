@@ -41,7 +41,7 @@ export default {
   height: 80px;
 
   /* Style du bouton */
-  background-color: #FA7268;
+  background-color: #ED6962;
   color: #ffffff;
   font-size: 1.2rem;
   font-weight: bold;
@@ -56,7 +56,7 @@ export default {
 }
 
 .button:hover {
-  background-color: #d95a50;
+  background-color: #ED6962;
   transform: scale(1.05);
 }
 </style>

@@ -1,55 +1,76 @@
 <template>
-  <div class="containerStat">
-    <!-- Bouton "Espace Formulaire" en deux lignes -->
-    <router-link to="/formulaire" class="button">
-      Statistiques
-    </router-link>
+  <div class="index-page">
+    <!-- Bouton Statistiques en haut à droite -->
+    <div class="top-right-button">
+      <StatButton />
+    </div>
 
+    <!-- Ton contenu principal -->
+    <div class="containerStat">
+      <!-- Bouton déjà existant vers /formulaire -->
+      <router-link to="/formulaire" class="button">
+        Statistiques
+      </router-link>
+    </div>
   </div>
 </template>
+
 <script>
+import StatButton from "@/components/admin/StatButton.vue";
+
 export default {
   name: "IndexPage",
+  components: {
+    StatButton,
+  },
 };
 </script>
 
 <style scoped>
-.containerStat {
-  display: flex;
-  justify-content: center; /* Centre horizontalement le groupe de boutons */
-  align-items: center ;     /* Aligne verticalement les boutons */
-  gap: 3rem;               /* Espacement entre les deux boutons */
+/* Le conteneur global */
+.index-page {
+  /* Pour que le positionnement absolute prenne comme référence toute la zone */
+  position: relative;
+  width: 100%;
+  height: 100vh; /* S'étend sur la hauteur de la fenêtre (ou adapte selon ton besoin) */
 }
 
-.button {
-  /* Permet d'empiler le texte sur plusieurs lignes */
-  display: inline-flex;
-  flex-direction: column; /* Met "Espace" au-dessus de "Formulaire" ou "Administrateur" */
+/* Le conteneur qui place le bouton en haut à droite */
+.top-right-button {
+  position: absolute;
+  top: 20px;    /* Ajuste selon l'endroit exact où tu veux le bouton */
+  right: 20px;  /* Idem */
+  z-index: 999; /* Au-dessus du fond violet et des éléments décoratifs */
+}
+
+/* Ton bloc existant pour le lien "Statistiques" vers /formulaire */
+.containerStat {
+  display: flex;
   justify-content: center;
   align-items: center;
-  text-align: center;
+  gap: 3rem;
+  margin-top: 80px; /* Laisse de l'espace pour ne pas chevaucher le bouton */
+}
 
-  /* Taille fixe pour rendre les boutons identiques */
-  width: 20px;
-  height: 30px;
-
-  /* Style du bouton */
-  background-color: #FA7268;
+/* Exemple de style pour le router-link .button */
+.button {
+  background-color: #ED6962; /* Orange */
   color: #ffffff;
-  font-size: 1.2rem;
-  font-weight: bold;
-  line-height: 1.2;       /* Contrôle l'espacement entre les lignes */
-  padding: 0.5rem;        /* Petite marge intérieure */
   border: none;
+  width: 100px;
+  height: 40px;
   border-radius: 100px;
   text-decoration: none;
-
-  /* Transition (effet hover) */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1rem;
+  font-weight: bold;
   transition: background 0.3s ease, transform 0.2s;
 }
 
 .button:hover {
-  background-color: #d95a50;
+  background-color: #ED6962;
   transform: scale(1.05);
 }
 </style>

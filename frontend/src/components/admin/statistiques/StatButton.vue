@@ -9,10 +9,9 @@ export default {
   name: "StatButton",
   methods: {
     goToStats() {
-      // Redirige vers la page "statistiques"
       this.$router.push("/admin/statistiques");
-      // Ou si tu as nommé ta route :
-      // this.$router.push({ name: "Statistiques" });
+      // Ou si vous préférez utiliser le nom de la route
+      // this.$router.push({ name: "AdminStatistiques" });
     },
   },
 };
@@ -20,24 +19,28 @@ export default {
 
 <style scoped>
 .stat-button {
-  background-color: #f0746c; /* Couleur corail/saumon comme sur l'image */
-  color: white;
-  font-weight: 500; /* Un peu moins bold que votre version */
+  background-color: #ED6962; /* Orange/corail comme sur votre maquette */
+  color: #ffffff;
   border: none;
-  border-radius: 20px; /* Coins plus arrondis */
-  padding: 8px 16px; /* Ajustement du padding pour une forme plus ovale */
+  width: 120px; /* Un peu plus large pour contenir "Statistiques" */
+  height: 40px;
+  border-radius: 100px;
+  text-decoration: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1rem;
+  font-weight: bold;
+  transition: background 0.3s ease, transform 0.2s;
   cursor: pointer;
-  font-size: 14px; /* Taille de police ajustée */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Légère ombre comme sur l'image */
-  transition: background-color 0.2s, transform 0.1s;
 }
 
 .stat-button:hover {
-  background-color: #e56962; /* Version légèrement plus foncée au survol */
-  transform: translateY(-1px); /* Effet subtil de soulèvement */
+  background-color: #d85a53; /* Légèrement plus foncé au survol */
+  transform: translateY(-2px);
 }
 
 .stat-button:active {
-  transform: translateY(1px); /* Effet d'enfoncement au clic */
+  transform: translateY(1px);
 }
 </style>

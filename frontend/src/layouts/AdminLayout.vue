@@ -85,7 +85,7 @@ body {
   position: absolute;
   top: 0;
   left: 0;
-  background-color: rgba(144, 89, 160, 1);
+  background-color: #9059A0;
 }
 
 /* Les autres styles restent inchangés */
