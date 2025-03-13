@@ -3,23 +3,31 @@
     <div class="background-container">
       <div class="rectangle-background-blanc"></div>
       <div class="rectangle-background-orange"></div>
-      <div class="logo-background"></div>
       <div class="background-overlay"></div>
+      <div class="background-top-right"></div>
+      <div class="background-top-left"></div>
+      <div class="background-top-rectangle"></div>
+
+
     </div>
 
     <main>
-      <header>
-        <h1 class="title">Eduprospect</h1>
-      </header>
-      <router-view />
+        <router-view />
+        <FooterStatistique />
     </main>
   </div>
 </template>
 
 <script>
+import FooterStatistique from "@/components/admin/FooterStatistique.vue";
+
 export default {
   name: "AdminLayout",
+  components: {
+    FooterStatistique,  // Déclaration du composant
+  },
 };
+
 </script>
 
 <style scoped>
@@ -63,7 +71,7 @@ body {
   opacity: 1;
   position: absolute;
   top: 710px;
-  left: 270px;
+  left: 200px;
   border-radius: 135px;
   transform: scaleX(-1);
 }
@@ -78,20 +86,7 @@ body {
   opacity: 1;
   position: absolute;
   top: 730px;
-  left: 300px;
-}
-
-.logo-background {
-  width: 148px;
-  height: 101px;
-  background: url("@/assets/images/designElement/Trait2PointsBlancOrange.png");
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: contain;
-  opacity: 1;
-  position: absolute;
-  top: 206px;
-  left: 1292px;
+  left: 240px;
 }
 
 .background-overlay {
@@ -107,6 +102,38 @@ body {
   left: 755px;
 }
 
+/* Nouveau style pour l'élément en haut à droite */
+.background-top-right {
+  position: absolute;
+  top: 200px;        /* Espacement du bord supérieur */
+  right: 20px;      /* Espacement du bord droit */
+  width: 200px;     /* Largeur de l'élément */
+  height: 200px;    /* Hauteur de l'élément */
+  background-image: url("@/assets/images/designElement/Trait2PointsBlancOrange.png"); /* Remplace "tonImage.png" par le chemin de ton image */
+  background-size: cover; /* Ajuste l'image à la taille de l'élément */
+  background-repeat: no-repeat;
+}
+.background-top-left {
+  position: absolute;
+  top: -175px;
+  right: 600px;
+  width: 400px;
+  height: 400px;
+  background-image: url("@/assets/images/designElement/Trait2PointsOrangeBlancOrange.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.background-top-rectangle {
+  position: absolute;
+  top: -250px;
+  right: -200px;
+  width: 650px;
+  height: 650px;
+  background-image: url("@/assets/images/designElement/RectangleRayeBlanc.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
 
 main {
   flex: 1;
@@ -114,14 +141,5 @@ main {
   display: flex;
   justify-content: center;
   padding: 2rem;
-}
-
-.title {
-  font-family: "Plus Jakarta Sans", sans-serif;
-  font-size: 3rem;
-  font-weight: bold;
-  margin-top: 2rem;
-  margin-bottom: 1rem;
-  color: #fa7268;
 }
 </style>

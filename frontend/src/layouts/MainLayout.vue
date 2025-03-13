@@ -26,8 +26,8 @@ export default {
   background-color: #2F2769;
   background-image: url("@/assets/images/logoIsis/logo-ISIS-horizontal-BLANC-rogne.png");
   background-repeat: no-repeat;
-  background-position: center;  /* Centre l'image au milieu */
-  background-size: 35%;         /* Ajuste la taille de l'image (en %) ou "cover"/"contain" */
+  background-position: center;
+  background-size: 35%;
 
   /* Mise en page générale */
   color: #fff;
