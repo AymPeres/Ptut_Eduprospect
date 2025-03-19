@@ -4,7 +4,6 @@
       <img src="@/assets/images/logoIsis/logo-ISIS-horizontal-RVB.png" alt="Logo de l'école" />
     </div>
     <div class="content">
-      <!-- Ajoutez ici tout autre contenu nécessaire -->
       <p>Statistiques et informations</p>
     </div>
   </div>
@@ -18,23 +17,21 @@ export default {
 
 <style scoped>
 .footer-statistique {
-  position:absolute;
+  position: absolute;
   top: 0;
   left: 0;
   width: 300px;
-  height: 1024px;
+  min-height: 100vh; /* S'assure que la sidebar s'étend sur toute la hauteur de la fenêtre */
   background-color: white;
 }
 
-
-
 .logo img {
-  width: 200px;             /* Taille du logo */
+  width: 200px; /* Taille du logo */
   height: auto;
 }
 
 .content {
-  color: white;
+  color: #333; /* Pour que le texte soit visible sur fond blanc */
   font-size: 0.9rem;
   margin-top: 20px;
   text-align: center;

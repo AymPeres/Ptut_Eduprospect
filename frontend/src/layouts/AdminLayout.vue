@@ -7,27 +7,34 @@
       <div class="background-top-right"></div>
       <div class="background-top-left"></div>
       <div class="background-top-rectangle"></div>
-
-
     </div>
 
+<!--    &lt;!&ndash; Ajout du header qui contiendra le bouton statistiques &ndash;&gt;-->
+<!--    <header class="admin-header">-->
+<!--      <div class="admin-title">Espace Administrateur</div>-->
+<!--      <div class="admin-actions">-->
+<!--        <StatButton />-->
+<!--      </div>-->
+<!--    </header>-->
+
     <main>
-        <router-view />
-        <FooterStatistique />
+      <router-view />
+      <FooterStatistique />
     </main>
   </div>
 </template>
 
 <script>
 import FooterStatistique from "@/components/admin/FooterStatistique.vue";
+import StatButton from "@/components/admin/StatButton.vue";
 
 export default {
   name: "AdminLayout",
   components: {
-    FooterStatistique,  // Déclaration du composant
+    FooterStatistique,
+    StatButton,
   },
 };
-
 </script>
 
 <style scoped>
@@ -50,17 +57,38 @@ body {
   align-items: center;
 }
 
+/* Nouveau style pour l'en-tête administrateur */
+.admin-header {
+  position: relative;
+  z-index: 10; /* Pour s'assurer qu'il est au-dessus des éléments de fond */
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px;
+}
+
+.admin-title {
+  color: white;
+  font-size: 18px;
+  font-weight: 500;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+.admin-actions {
+  /* Conteneur pour le bouton, ce qui permet de placer d'autres éléments à côté si nécessaire */
+}
+
 .background-container {
   width: 100%;
-  height: 1024px;
+  min-height: 100vh;
   position: absolute;
   top: 0;
   left: 0;
-  overflow: hidden;
-  background-color: rgba(144, 89, 160, 1);
-  opacity: 1;
+  background-color: #9059A0;
 }
 
+/* Les autres styles restent inchangés */
 .rectangle-background-blanc {
   width: 547px;
   height: 547px;
@@ -99,20 +127,20 @@ body {
   opacity: 0.6;
   position: absolute;
   top: 342px;
-  left: 755px;
+  left: 650px;
 }
 
-/* Nouveau style pour l'élément en haut à droite */
 .background-top-right {
   position: absolute;
-  top: 200px;        /* Espacement du bord supérieur */
-  right: 20px;      /* Espacement du bord droit */
-  width: 200px;     /* Largeur de l'élément */
-  height: 200px;    /* Hauteur de l'élément */
-  background-image: url("@/assets/images/designElement/Trait2PointsBlancOrange.png"); /* Remplace "tonImage.png" par le chemin de ton image */
-  background-size: cover; /* Ajuste l'image à la taille de l'élément */
+  top: 200px;
+  right: 20px;
+  width: 200px;
+  height: 200px;
+  background-image: url("@/assets/images/designElement/Trait2PointsBlancOrange.png");
+  background-size: cover;
   background-repeat: no-repeat;
 }
+
 .background-top-left {
   position: absolute;
   top: -175px;
@@ -141,5 +169,6 @@ main {
   display: flex;
   justify-content: center;
   padding: 2rem;
+  margin-top: 40px; /* Ajout d'une marge en haut pour éviter que le contenu chevauche le header */
 }
 </style>
