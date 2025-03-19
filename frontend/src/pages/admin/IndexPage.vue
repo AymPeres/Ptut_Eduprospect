@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import StatButton from "@/components/admin/StatButton.vue";
+import StatButton from "@/components/admin/statistiques/StatButton.vue";
 
 export default {
   name: "IndexPage",
@@ -44,13 +44,7 @@ export default {
 }
 
 /* Ton bloc existant pour le lien "Statistiques" vers /formulaire */
-.containerStat {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 3rem;
-  margin-top: 80px; /* Laisse de l'espace pour ne pas chevaucher le bouton */
-}
+
 
 /* Exemple de style pour le router-link .button */
 .button {

@@ -37,10 +37,7 @@ export default {
 
 .stat-button:hover {
   background-color: #d85a53; /* Légèrement plus foncé au survol */
-  transform: translateY(-2px);
 }
 
-.stat-button:active {
-  transform: translateY(1px);
-}
+
 </style>

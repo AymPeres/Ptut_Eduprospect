@@ -26,7 +26,7 @@
 
 <script>
 import FooterStatistique from "@/components/admin/FooterStatistique.vue";
-import StatButton from "@/components/admin/StatButton.vue";
+import StatButton from "@/components/admin/statistiques/StatButton.vue";
 
 export default {
   name: "AdminLayout",
