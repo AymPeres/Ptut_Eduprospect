@@ -25,7 +25,7 @@ export default {
   display: flex;
   justify-content: center; /* Centre horizontalement le groupe de boutons */
   align-items: center;     /* Aligne verticalement les boutons */
-  gap: 3rem;               /* Espacement entre les deux boutons */
+  gap: 24rem;               /* Espacement entre les deux boutons */
 }
 
 .button {
