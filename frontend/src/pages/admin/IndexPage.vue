@@ -4,14 +4,6 @@
     <div class="top-right-button">
       <StatButton />
     </div>
-
-    <!-- Ton contenu principal -->
-    <div class="containerStat">
-      <!-- Bouton déjà existant vers /formulaire -->
-      <router-link to="/formulaire" class="button">
-        Statistiques
-      </router-link>
-    </div>
   </div>
 </template>
 
@@ -46,22 +38,7 @@ export default {
 /* Ton bloc existant pour le lien "Statistiques" vers /formulaire */
 
 
-/* Exemple de style pour le router-link .button */
-.button {
-  background-color: #ED6962; /* Orange */
-  color: #ffffff;
-  border: none;
-  width: 100px;
-  height: 40px;
-  border-radius: 100px;
-  text-decoration: none;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 1rem;
-  font-weight: bold;
-  transition: background 0.3s ease, transform 0.2s;
-}
+
 
 .button:hover {
   background-color: #ED6962;
