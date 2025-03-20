@@ -7,32 +7,14 @@ const router = createRouter({
       path: "/",
       component: () => import("@/layouts/MainLayout.vue"),
       children: [
-        {
-          path: "",
-          component: () => import("@/pages/formulaire/IndexPage.vue"),
-        },
-        {
-          path: "formulaire",
-          component: () => import("@/pages/formulaire/IndexPage.vue"),
-        },
-        {
-          path: "admin/login",
-          name: "AdminLogin",
-          component: () => import("@/pages/LoginPage.vue"),
-        },
+        { path: "", component: () => import("@/pages/formulaire/IndexPage.vue") },
+        { path: "formulaire", component: () => import("@/pages/formulaire/Formulaire.vue") },
+        { path: "prospect/:salon", name: "InfoProspect", component: () => import("@/pages/formulaire/InfoProspect.vue") },
+        { path: "questions-prospect", name: "QuestionsProspect", component: () => import("@/pages/formulaire/QuestionProspect.vue") },
+        { path: "admin/login", name: "AdminLogin", component: () => import("@/pages/LoginPage.vue") },
       ],
     },
-    {
-      path: "/admin",
-      component: () => import("@/layouts/AdminLayout.vue"),
-      children: [
-        {
-          path: "",
-          name: "AdminIndex",
-          component: () => import("@/pages/admin/IndexPage.vue"),
-        },
-      ],
-    },
+    { path: "/adminlayout", component: () => import("@/layouts/AdminLayout.vue") },
   ],
 });
 
