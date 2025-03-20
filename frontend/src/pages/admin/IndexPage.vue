@@ -1,24 +1,21 @@
 <template>
   <div class="index-page">
-    <!-- Bouton Statistiques en haut à droite -->
+    <DisconnectButton />
     <div class="top-right-button">
       <StatButton />
     </div>
-
-    <!-- FooterGestion ajouté -->
-    <FooterGestion />
   </div>
 </template>
 
 <script>
 import StatButton from "@/components/admin/statistiques/StatButton.vue";
-import FooterGestion from "@/components/admin/statistiques/FooterGestion.vue";
+import DisconnectButton from "@/components/admin/DisconnectButton.vue";
 
 export default {
   name: "IndexPage",
   components: {
     StatButton,
-    FooterGestion,
+    DisconnectButton,
   },
 };
 </script>
@@ -28,10 +25,10 @@ export default {
 .index-page {
   position: relative;
   width: 100%;
-  height: 100vh; /* S'étend sur toute la hauteur */
+  height: 100vh;
 }
 
-/* Placement du bouton Statistiques en haut à droite */
+/* Le conteneur qui place le bouton en haut à droite */
 .top-right-button {
   position: absolute;
   top: 20px;
@@ -39,9 +36,5 @@ export default {
   z-index: 999;
 }
 
-/* Animation du bouton */
-.button:hover {
-  background-color: #ED6962;
-  transform: scale(1.05);
-}
+
 </style>

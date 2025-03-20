@@ -1,8 +1,9 @@
 @import 'base.css';
 
 #app {
-  max-width: 1280px;
-  margin: 0 auto;
+  width: 100%; /* Occupe toute la largeur de la page */
+  height: 100vh; /* Occupe toute la hauteur de la page */
+  margin: 0 auto; /* Annule les marges latérales */
   font-weight: normal;
 }
 
@@ -20,15 +21,8 @@ a,
   }
 }
 
-/* @media (min-width: 1024px) {
-  body {
-    display: flex;
-    place-items: center;
-  }
-
-  #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
-  }
-} */
+body {
+  margin: 0; /* Enlever les marges par défaut */
+  padding: 0; /* Enlever les espacements par défaut */
+  height: 100%; /* Assurer que le body occupe toute la hauteur de la page */
+}
