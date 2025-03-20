@@ -50,6 +50,5 @@ main {
   width: 100%;
   display: flex;
   justify-content: center;
-  padding: 2rem;
 }
 </style>
