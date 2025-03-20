@@ -12,22 +12,16 @@
     </div>
 
     <main>
-        <router-view />
-        <FooterStatistique />
+      <router-view />
+
     </main>
   </div>
 </template>
 
 <script>
-import FooterStatistique from "@/components/admin/FooterStatistique.vue";
-
 export default {
   name: "AdminLayout",
-  components: {
-    FooterStatistique,  // Déclaration du composant
-  },
 };
-
 </script>
 
 <style scoped>

@@ -42,7 +42,7 @@ export default {
   font-weight: bold;
   margin-top: 2rem;
   margin-bottom: 1rem;
-  color: #FA7268;
+  color: #ED6962;
 }
 
 main {

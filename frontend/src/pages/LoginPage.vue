@@ -7,7 +7,9 @@
 
       <div class="login-actions">
         <a href="#" class="forgot-link">mot de passe oublié ?</a>
-        <button type="button" class="login-button" @click="goToAdmin">Se connecter</button>
+        <router-link to="/admin" class="login-button">Se connecter</router-link>
+
+
       </div>
     </form>
   </div>
@@ -43,7 +45,7 @@ export default {
 
 /* 3) Titre au-dessus du champ */
 .login-title {
-  color: #fa7268;              /* Sur fond violet géré par le layout */
+  color: #ED6962;              /* Sur fond violet géré par le layout */
   font-size: 1.4rem;
   margin-bottom: 1.5rem;
   text-align: center;
@@ -87,7 +89,7 @@ export default {
 
 /* Bouton "Se connecter" */
 .login-button {
-  background-color: #fa7268;   /* Orange */
+  background-color: #ED6962;   /* Orange */
   color: #ffffff;
   border: none;
   padding: 0.8rem 1.5rem;
@@ -99,7 +101,7 @@ export default {
 
 /* Effet hover */
 .login-button:hover {
-  background-color: #d95a50;
+  background-color: #ED6962;
   transform: scale(1.03);
 }
 </style>
