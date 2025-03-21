@@ -1,5 +1,6 @@
 <template>
   <div class="main-content">
+    <HomeButton />
     <form class="questionnaire">
       <label for="genre">Vous êtes :</label>
       <select id="genre" v-model="genre">
@@ -25,7 +26,6 @@
         <option value="reseaux">Réseaux sociaux</option>
         <option value="bouche">Bouche à oreille</option>
         <option value="autre">Autre</option>
-
       </select>
 
       <button type="submit" class="btn-valider">Valider</button>
@@ -36,12 +36,14 @@
 </template>
 
 <script>
-import Footer from "@/components/formulaire/Footer.vue"; // Importation du footer
+import HomeButton from "@/components/formulaire/HomeButton.vue";
+import Footer from "@/components/formulaire/Footer.vue";
 
 export default {
   name: "QuestionsProspect",
   components: {
-    Footer, // Déclaration du footer
+    HomeButton,
+    Footer,
   },
   data() {
     return {
@@ -56,23 +58,23 @@ export default {
 
 <style scoped>
 .main-content {
-  min-height: 100vh; /* Assure que la page occupe toute la hauteur de la fenêtre */
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: space-between; /* Assure que le contenu est réparti entre le haut et le bas */
-  align-items: center; /* Centre le contenu horizontalement */
+  justify-content: space-between;
+  align-items: center;
 }
 
 .questionnaire {
   width: 100%;
-  max-width: 600px; /* Limite la largeur du formulaire */
+  max-width: 600px;
   display: flex;
   flex-direction: column;
   gap: 15px;
-  padding: 0; /* Enlève le padding pour éviter le cadre */
-  border: none; /* Enlève la bordure */
-  background-color: transparent; /* Fond transparent */
-  box-shadow: none; /* Enlève l'ombre */
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  box-shadow: none;
 }
 
 label {
@@ -83,7 +85,7 @@ label {
 select, .btn-valider {
   padding: 10px;
   font-size: 1rem;
-  width: 100%; /* Les champs prennent toute la largeur du formulaire */
+  width: 100%;
 }
 
 .btn-valider {

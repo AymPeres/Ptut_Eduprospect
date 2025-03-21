@@ -1,5 +1,6 @@
 <template>
   <div class="formulaire-container">
+    <HomeButton />
     <div class="title-container">
       <h1>Formulaire d'inscription</h1>
       <p>Veuillez sélectionner un salon</p>
@@ -25,9 +26,11 @@
 </template>
 
 <script>
+import HomeButton from "@/components/formulaire/HomeButton.vue";
 
 export default {
   name: "Formulaire",
+  components: { HomeButton },
   data() {
     return {
       selectedSalon: "",
@@ -48,8 +51,8 @@ export default {
 <style scoped>
 .formulaire-container {
   width: 100%;
-  max-width: 600px; /* Limiter la largeur du formulaire */
-  margin: 0 auto; /* Centrer le formulaire */
+  max-width: 600px;
+  margin: 0 auto;
   padding: 20px;
 }
 

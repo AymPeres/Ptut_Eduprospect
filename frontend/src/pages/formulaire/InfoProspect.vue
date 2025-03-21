@@ -1,5 +1,6 @@
 <template>
   <div class="page-container">
+    <HomeButton />
     <div class="info-prospect-container">
       <h1>Formulaire d'inscription pour le salon {{ salon }}</h1>
 
@@ -42,11 +43,12 @@
 </template>
 
 <script>
+import HomeButton from "@/components/formulaire/HomeButton.vue";
 import Footer from "@/components/formulaire/Footer.vue";
 
 export default {
   name: "InfoProspect",
-  components: { Footer },
+  components: { HomeButton, Footer },
   data() {
     return {
       salon: this.$route.params.salon,
@@ -64,11 +66,24 @@ export default {
       this.$router.push("/questions-prospect");
     },
   },
+  beforeRouteLeave(to, from, next) {
+    if (to.path === "/formulaire") {
+      const motDePasse = prompt("Entrez le mot de passe pour revenir en arrière :");
+      if (motDePasse === null) return;
+      if (motDePasse === "1234") {
+        next();
+      } else {
+        alert("Mot de passe incorrect !");
+        next(false);
+      }
+    } else {
+      next();
+    }
+  },
 };
 </script>
 
 <style scoped>
-/* Styles généraux pour occuper toute la hauteur de l'écran */
 .page-container {
   display: flex;
   flex-direction: column;
@@ -76,7 +91,7 @@ export default {
 }
 
 .info-prospect-container {
-  flex-grow: 1; /* Permet au contenu de s'étirer pour pousser le footer en bas */
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
