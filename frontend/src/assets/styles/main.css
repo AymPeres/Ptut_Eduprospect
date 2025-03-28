@@ -1,11 +1,10 @@
 @import 'base.css';
 
-#app {
-  width: 100%; /* Occupe toute la largeur de la page */
-  height: 100vh; /* Occupe toute la hauteur de la page */
-  margin: 0 auto; /* Annule les marges latérales */
-  font-weight: normal;
-}
+/*#app {*/
+/*  max-width: 1280px;*/
+/*  margin: 0 auto;*/
+/*  font-weight: normal;*/
+/*}*/
 
 a,
 .green {

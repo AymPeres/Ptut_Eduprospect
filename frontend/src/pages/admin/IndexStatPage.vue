@@ -1,27 +1,24 @@
 <template>
   <div class="index-page">
-    <!-- Sidebar (FooterGestion) -->
-    <FooterGestion class="sidebar" />
+    <!-- Sidebar (FooterStat) -->
+    <FooterStatistique class="sidebarStat" />
 
-    <!-- Bouton Statistiques en haut à droite -->
-
+    <!-- Bouton Gestion en haut à droite -->
     <div class="top-right-button">
-      <StatButton />
+      <GestionButton />
     </div>
   </div>
 </template>
 
 <script>
-import StatButton from "@/components/admin/statistiques/StatButton.vue";
-import FooterGestion from "@/components/admin/FooterGestion.vue";
-
+import FooterStatistique from "@/components/admin/FooterStatistique.vue";
+import GestionButton from "@/components/admin/GestionButton.vue";
 
 export default {
   name: "IndexPage",
   components: {
-    StatButton,
-    FooterGestion,
-
+    GestionButton,
+    FooterStatistique,
   },
 };
 </script>
@@ -42,8 +39,8 @@ export default {
   z-index: 999;
 }
 
-/* La sidebar blanche (FooterGestion) */
-.sidebar {
+/* La sidebar blanche (FooterStat) */
+.sidebarStat {
   position: fixed;
   top: 0;
   left: 0;
@@ -52,5 +49,4 @@ export default {
   background-color: #fff;
   z-index: 1000;     /* Devant le fond violet */
 }
-
 </style>

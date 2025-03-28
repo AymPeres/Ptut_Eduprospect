@@ -8,11 +8,11 @@
     </div>
     <div class="buttons">
       <button class="stat-button">Proportion par formation</button>
-      <button class="stat-button">Nb prospects selon critère</button>
-      <button class="stat-button">Stat 3</button>
-      <button class="stat-button">Stat 4</button>
-      <button class="stat-button">Stat 5</button>
-      <button class="stat-button">Stat 6</button>
+      <button class="stat-button">Villes/Années/Salons</button>
+      <button class="stat-button">Statut</button>
+      <button class="stat-button">Cycle</button>
+      <button class="stat-button">Connaître Isis</button>
+      <button class="stat-button">Genre</button>
     </div>
   </div>
 </template>
@@ -34,7 +34,6 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px;
 }
 
 .logo img {

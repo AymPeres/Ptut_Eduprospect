@@ -23,6 +23,10 @@ export default {
   width: 300px;
   min-height: 100vh; /* S'assure que la sidebar s'étend sur toute la hauteur de la fenêtre */
   background-color: white;
+  /* Active le flexbox en colonne et centre horizontalement */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .logo img {

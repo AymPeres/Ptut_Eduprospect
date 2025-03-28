@@ -9,7 +9,7 @@ export default {
   name: "StatButton",
   methods: {
     goToStats() {
-      this.$router.push("/admin/statistiques");
+      this.$router.push({ name: "AdminStatPage" });
       // Ou si vous préférez utiliser le nom de la route
       // this.$router.push({ name: "AdminStatistiques" });
     },
