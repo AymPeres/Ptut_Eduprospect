@@ -3,6 +3,9 @@
     <!-- Sidebar (FooterGestion) -->
     <FooterGestion class="sidebar" />
 
+    <div class="top-bar">
+      <DisconnectButton />
+    </div>
     <!-- Bouton Statistiques en haut à droite -->
 
     <div class="top-right-button">
@@ -14,6 +17,7 @@
 <script>
 import StatButton from "@/components/admin/statistiques/StatButton.vue";
 import FooterGestion from "@/components/admin/FooterGestion.vue";
+import DisconnectButton from "@/components/admin/DisconnectButton.vue";
 
 
 export default {
@@ -21,6 +25,7 @@ export default {
   components: {
     StatButton,
     FooterGestion,
+    DisconnectButton
 
   },
 };
@@ -32,6 +37,14 @@ export default {
   position: relative;
   width: 100%;
   height: 100vh;
+}
+
+.top-bar {
+position: absolute;
+top: 0px; /* Ajuste cette valeur pour aligner verticalement avec la barre orange */
+left: 247px;
+transform: translateX(-50%);
+z-index: 999;
 }
 
 /* Le conteneur qui place le bouton en haut à droite */
