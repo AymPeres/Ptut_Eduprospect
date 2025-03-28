@@ -4,7 +4,7 @@
       <img src="@/assets/images/logoIsis/logo-ISIS-horizontal-RVB.png" alt="Logo de l'école" />
     </div>
     <div class="content">
-      <p>Statistiques et informations</p>
+      <p>Statistiques et Informations</p>
     </div>
   </div>
 </template>
