@@ -4,6 +4,7 @@
     <FooterGestion class="sidebar" />
 
     <!-- Bouton Statistiques en haut à droite -->
+
     <div class="top-right-button">
       <StatButton />
     </div>
@@ -14,11 +15,13 @@
 import StatButton from "@/components/admin/statistiques/StatButton.vue";
 import FooterGestion from "@/components/admin/FooterGestion.vue";
 
+
 export default {
   name: "IndexPage",
   components: {
     StatButton,
     FooterGestion,
+
   },
 };
 </script>
@@ -49,4 +52,5 @@ export default {
   background-color: #fff;
   z-index: 1000;     /* Devant le fond violet */
 }
+
 </style>

@@ -7,19 +7,11 @@ const router = createRouter({
       path: "/",
       component: () => import("@/layouts/MainLayout.vue"),
       children: [
-        {
-          path: "",
-          component: () => import("@/pages/formulaire/IndexPage.vue"),
-        },
-        {
-          path: "formulaire",
-          component: () => import("@/pages/formulaire/IndexPage.vue"),
-        },
-        {
-          path: "admin/login",
-          name: "AdminLogin",
-          component: () => import("@/pages/LoginPage.vue"),
-        },
+        { path: "", component: () => import("@/pages/formulaire/IndexPage.vue") },
+        { path: "formulaire", component: () => import("@/pages/formulaire/Formulaire.vue") },
+        { path: "prospect/:salon", name: "InfoProspect", component: () => import("@/pages/formulaire/InfoProspect.vue") },
+        { path: "questions-prospect", name: "QuestionsProspect", component: () => import("@/pages/formulaire/QuestionProspect.vue") },
+        { path: "admin/login", name: "AdminLogin", component: () => import("@/pages/LoginPage.vue") },
       ],
     },
     {
@@ -46,6 +38,7 @@ const router = createRouter({
           // Si ton composant se trouve ailleurs (ex: "@/components/admin/statistiques/IndexStatPage.vue"),
           // adapte simplement le chemin d'import ci-dessus.
         },
+
       ],
     },
   ],
