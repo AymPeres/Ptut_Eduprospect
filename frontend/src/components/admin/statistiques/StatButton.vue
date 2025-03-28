@@ -30,6 +30,7 @@ export default {
   justify-content: center;
   align-items: center;
   font-size: 1rem;
+  font-weight: bold;
   transition: background 0.3s ease, transform 0.2s;
   cursor: pointer;
 }

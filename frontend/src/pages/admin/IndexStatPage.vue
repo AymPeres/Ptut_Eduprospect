@@ -3,6 +3,11 @@
     <!-- Sidebar (FooterStat) -->
     <FooterStatistique class="sidebarStat" />
 
+    <!-- Barre en haut -->
+    <div class="top-bar">
+      <DisconnectButton />
+    </div>
+
     <!-- Bouton Gestion en haut à droite -->
     <div class="top-right-button">
       <GestionButton />
@@ -13,12 +18,15 @@
 <script>
 import FooterStatistique from "@/components/admin/FooterStatistique.vue";
 import GestionButton from "@/components/admin/GestionButton.vue";
+import DisconnectButton from "@/components/admin/DisconnectButton.vue";
+
 
 export default {
   name: "IndexPage",
   components: {
     GestionButton,
     FooterStatistique,
+    DisconnectButton
   },
 };
 </script>
@@ -38,7 +46,13 @@ export default {
   right: 20px;
   z-index: 999;
 }
-
+.top-bar {
+  position: absolute;
+  top: 0px; /* Ajuste cette valeur pour aligner verticalement avec la barre orange */
+  left: 247px;
+  transform: translateX(-50%);
+  z-index: 999;
+}
 /* La sidebar blanche (FooterStat) */
 .sidebarStat {
   position: fixed;
