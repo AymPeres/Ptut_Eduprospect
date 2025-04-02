@@ -14,21 +14,11 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import StatButton from "@/components/admin/statistiques/StatButton.vue";
 import FooterGestion from "@/components/admin/FooterGestion.vue";
 import DisconnectButton from "@/components/admin/DisconnectButton.vue";
 
-
-export default {
-  name: "IndexPage",
-  components: {
-    StatButton,
-    FooterGestion,
-    DisconnectButton
-
-  },
-};
 </script>
 
 <style scoped>
