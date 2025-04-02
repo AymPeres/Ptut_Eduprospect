@@ -1,7 +1,6 @@
 <template>
   <div class="navigation">
     <h2>Veuillez choisir un événement</h2>
-
     <!-- Liste des années -->
     <div>
       <h3>Années</h3>
@@ -28,6 +27,8 @@
       <ul>
         <li v-for="salon in salons" :key="salon.id">
           <button @click="selectSalon(salon)">{{ salon.nom }}</button>
+          <!-- Bouton de suppression avec l'emoji poubelle -->
+          <button class="delete-btn" @click="deleteSalon(salon)">🗑️</button>
         </li>
       </ul>
     </div>
@@ -85,6 +86,32 @@ const selectCity = async (city) => {
   }
 };
 
+// Action lors du clic sur un salon (exemple, affiche en console)
+const selectSalon = (salon) => {
+  console.log("Salon sélectionné :", salon);
+  // Ajoute ici la logique souhaitée, comme rediriger vers une page de détails
+};
+
+// Méthode pour supprimer un salon et actualiser la page
+const deleteSalon = async (salon) => {
+  if (confirm(`Confirmez-vous la suppression du salon "${salon.nom}" ?`)) {
+    try {
+      const response = await fetch(`/api/salons/${salon.id}`, {
+        method: 'DELETE'
+      });
+      if (!response.ok) {
+        throw new Error(`Erreur lors de la suppression : ${response.statusText}`);
+      }
+      console.log("Salon supprimé :", salon);
+
+      // Recharger la page après la suppression
+      window.location.reload();
+    } catch (error) {
+      console.error("Erreur lors de la suppression du salon :", error);
+    }
+  }
+};
+
 onMounted(fetchAnnees);
 </script>
 
@@ -98,5 +125,12 @@ onMounted(fetchAnnees);
 button {
   margin: 0.3rem;
   padding: 0.5rem 1rem;
+}
+
+.delete-btn {
+  background-color: red;
+  color: white;
+  border: none;
+  cursor: pointer;
 }
 </style>

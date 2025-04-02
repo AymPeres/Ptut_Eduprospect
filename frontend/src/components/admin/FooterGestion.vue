@@ -1,22 +1,20 @@
 <template>
   <div class="footer-gestion">
-    <!-- Logo d'abord -->
     <div class="logo">
       <img src="@/assets/images/logoIsis/logo-ISIS-horizontal-RVB.png" alt="Logo de l'école" />
     </div>
-
-    <!-- Titre ensuite -->
     <div class="content">
       <p>Espace administrateur</p>
     </div>
-
-    <!-- Navigation en dernier -->
+    <!-- Affichage de la navigation -->
     <Navigation />
+    <!-- Intégration du formulaire d'ajout de salon -->
+    <AddSalon />
   </div>
 </template>
 <script setup>
 import Navigation from '@/components/Navigation.vue'
-
+import AddSalon from '@/components/AddSalon.vue'
 </script>
 
 <style scoped>
@@ -46,11 +44,4 @@ import Navigation from '@/components/Navigation.vue'
   margin-bottom: 30px;
 }
 
-.nav {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 300px;
-  min-height: 100vh;
-}
 </style>
