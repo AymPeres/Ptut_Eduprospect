@@ -13,11 +13,16 @@ public class InscriptionService {
     @Autowired
     private InscriptionRepository inscriptionRepository;
 
-    public Inscription createInscription(Inscription inscription) {
-        return inscriptionRepository.save(inscription);
-    }
     public List<Inscription> findAll() {
         return inscriptionRepository.findAll();
     }
 
+    public List<Inscription> getInscriptionsBySalonId(Integer salonId) {
+        return inscriptionRepository.findBySalonId(salonId);
+    }
+
+    // Ajout de la méthode manquante pour créer une inscription
+    public Inscription createInscription(Inscription inscription) {
+        return inscriptionRepository.save(inscription);
+    }
 }

@@ -1,15 +1,15 @@
-<template>
-  <div>
-    <Navigation />
-  </div>
-</template>
+<!--<template>-->
+<!--  <div>-->
+<!--    <Navigation />-->
+<!--  </div>-->
+<!--</template>-->
 
-<script>
-import Navigation from '@/components/Navigation.vue'
+<!--<script>-->
+<!--import Navigation from '@/components/Navigation.vue'-->
 
-export default {
-  components: {
-    Navigation
-  }
-}
-</script>
+<!--export default {-->
+<!--  components: {-->
+<!--    Navigation-->
+<!--  }-->
+<!--}-->
+<!--</script>-->

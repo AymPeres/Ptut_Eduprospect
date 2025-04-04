@@ -1,6 +1,7 @@
 <template>
   <div class="navigation">
     <h2>Veuillez choisir un événement</h2>
+
     <!-- Liste des années -->
     <div>
       <h3>Années</h3>
@@ -11,7 +12,7 @@
       </ul>
     </div>
 
-    <!-- Liste des villes pour l'année sélectionnée -->
+    <!-- Liste des villes -->
     <div v-if="cities.length">
       <h3>Villes pour l'année {{ selectedAnnee }}</h3>
       <ul>
@@ -21,13 +22,12 @@
       </ul>
     </div>
 
-    <!-- Liste des salons pour la ville sélectionnée -->
+    <!-- Liste des salons -->
     <div v-if="salons.length">
       <h3>Salons pour la ville {{ selectedCity }}</h3>
       <ul>
         <li v-for="salon in salons" :key="salon.id">
-          <button @click="selectSalon(salon)">{{ salon.nom }}</button>
-          <!-- Bouton de suppression avec l'emoji poubelle -->
+          <button @click="chooseSalon(salon)">{{ salon.nom }}</button>
           <button class="delete-btn" @click="deleteSalon(salon)">🗑️</button>
         </li>
       </ul>
@@ -36,83 +36,74 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted } from 'vue'
 
-// Déclaration des variables réactives
-const annees = ref([]);
-const cities = ref([]);
-const salons = ref([]);
-const selectedAnnee = ref(null);
-const selectedCity = ref(null);
-const url = "/api/navigation/annees";
+// On définit l’événement qu’on va émettre vers FooterGestion
+const emit = defineEmits(['salon-chosen'])
 
-// Récupération des années via fetch
-const fetchAnnees = async () => {
+const annees = ref([])
+const cities = ref([])
+const salons = ref([])
+const selectedAnnee = ref(null)
+const selectedCity = ref(null)
+const url = "/api/navigation/annees"
+
+onMounted(fetchAnnees)
+
+async function fetchAnnees() {
   try {
-    const response = await fetch(`${url}`);
-    const data = await response.json();
-    annees.value = data;
-    console.log("Années :", annees.value);
+    const response = await fetch(`${url}`)
+    const data = await response.json()
+    annees.value = data
   } catch (error) {
-    console.error("Erreur lors du chargement des années :", error);
+    console.error("Erreur fetch annees:", error)
   }
-};
+}
 
-// Sélection d'une année et récupération des villes correspondantes
-const selectAnnee = async (annee) => {
-  selectedAnnee.value = annee;
-  selectedCity.value = null;
-  salons.value = []; // Réinitialisation des salons lors du changement d'année
+async function selectAnnee(annee) {
+  selectedAnnee.value = annee
+  selectedCity.value = null
+  salons.value = []
   try {
-    const response = await fetch(`${url}/${annee}/villes`);
-    const data = await response.json();
-    cities.value = data;
-    console.log("Villes :", cities.value);
+    const response = await fetch(`${url}/${annee}/villes`)
+    const data = await response.json()
+    cities.value = data
   } catch (error) {
-    console.error(`Erreur lors de la récupération des villes pour l'année ${annee} :`, error);
+    console.error("Erreur fetch villes:", error)
   }
-};
+}
 
-// Sélection d'une ville et récupération des salons correspondants
-const selectCity = async (city) => {
-  selectedCity.value = city;
+async function selectCity(city) {
+  selectedCity.value = city
   try {
-    const response = await fetch(`${url}/${selectedAnnee.value}/villes/${city}/salons`);
-    const data = await response.json();
-    salons.value = data;
-    console.log("Salons :", salons.value);
+    const response = await fetch(`${url}/${selectedAnnee.value}/villes/${city}/salons`)
+    const data = await response.json()
+    salons.value = data
   } catch (error) {
-    console.error(`Erreur lors de la récupération des salons pour la ville ${city} :`, error);
+    console.error("Erreur fetch salons:", error)
   }
-};
+}
 
-// Action lors du clic sur un salon (exemple, affiche en console)
-const selectSalon = (salon) => {
-  console.log("Salon sélectionné :", salon);
-  // Ajoute ici la logique souhaitée, comme rediriger vers une page de détails
-};
+function chooseSalon(salon) {
+  // On émet l’événement "salon-chosen" vers FooterGestion,
+  // en lui passant l’objet salon (avec id, nom, etc.)
+  emit('salon-chosen', salon)
+}
 
-// Méthode pour supprimer un salon et actualiser la page
-const deleteSalon = async (salon) => {
-  if (confirm(`Confirmez-vous la suppression du salon "${salon.nom}" ?`)) {
+async function deleteSalon(salon) {
+  if (confirm(`Supprimer le salon "${salon.nom}" ?`)) {
     try {
-      const response = await fetch(`/api/salons/${salon.id}`, {
-        method: 'DELETE'
-      });
+      const response = await fetch(`/api/salons/${salon.id}`, { method: 'DELETE' })
       if (!response.ok) {
-        throw new Error(`Erreur lors de la suppression : ${response.statusText}`);
+        throw new Error(`Erreur: ${response.statusText}`)
       }
-      console.log("Salon supprimé :", salon);
-
-      // Recharger la page après la suppression
-      window.location.reload();
+      // Après suppression, on recharge la liste des salons
+      await selectCity(selectedCity.value)
     } catch (error) {
-      console.error("Erreur lors de la suppression du salon :", error);
+      console.error("Erreur lors de la suppression du salon :", error)
     }
   }
-};
-
-onMounted(fetchAnnees);
+}
 </script>
 
 <style scoped>
@@ -120,11 +111,13 @@ onMounted(fetchAnnees);
   padding: 1rem;
   background-color: #FFFFFF;
   color: black;
+  font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
 button {
   margin: 0.3rem;
   padding: 0.5rem 1rem;
+  font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
 .delete-btn {
@@ -132,5 +125,6 @@ button {
   color: white;
   border: none;
   cursor: pointer;
+  font-family: 'Plus Jakarta Sans', sans-serif;
 }
 </style>

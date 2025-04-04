@@ -1,29 +1,42 @@
 <template>
   <div class="index-page">
-    <!-- Sidebar (FooterGestion) -->
-    <FooterGestion class="sidebar" />
+    <!-- Sidebar fixe -->
+    <FooterGestion class="sidebar" @salon-chosen="onSalonChosen" />
 
+    <!-- Barre du haut -->
     <div class="top-bar">
       <DisconnectButton />
     </div>
-
-    <!-- Bouton Statistiques en haut à droite -->
     <div class="top-right-button">
       <StatButton />
     </div>
 
-    <!-- Section principale pour afficher les inscriptions -->
+    <!-- Zone principale -->
     <div class="main-content">
-      <InscriptionsTable />
+      <!-- Affiche le tableau UNIQUEMENT si un salon est sélectionné -->
+      <InscriptionsTable
+        v-if="selectedSalon"
+        :salon="selectedSalon"
+      />
     </div>
   </div>
 </template>
 
 <script setup>
-import StatButton from "@/components/admin/statistiques/StatButton.vue";
-import FooterGestion from "@/components/admin/FooterGestion.vue";
-import DisconnectButton from "@/components/admin/DisconnectButton.vue";
-import InscriptionsTable from "@/components/admin/InscriptionsTable.vue";
+import { ref } from 'vue'
+
+import StatButton from "@/components/admin/statistiques/StatButton.vue"
+import FooterGestion from "@/components/admin/FooterGestion.vue"
+import DisconnectButton from "@/components/admin/DisconnectButton.vue"
+import InscriptionsTable from "@/components/admin/InscriptionsTable.vue"
+
+// On stocke ici le salon actuellement choisi
+const selectedSalon = ref(null)
+
+// Quand la sidebar nous dit qu’un salon a été choisi
+function onSalonChosen(salon) {
+  selectedSalon.value = salon
+}
 </script>
 
 <style scoped>
@@ -33,7 +46,7 @@ import InscriptionsTable from "@/components/admin/InscriptionsTable.vue";
   height: 100vh;
 }
 
-/* Top bar */
+/* Barre du haut */
 .top-bar {
   position: absolute;
   top: 0px;
@@ -42,7 +55,7 @@ import InscriptionsTable from "@/components/admin/InscriptionsTable.vue";
   z-index: 999;
 }
 
-/* Bouton en haut à droite */
+/* Bouton stats en haut à droite */
 .top-right-button {
   position: absolute;
   top: 20px;
@@ -55,15 +68,15 @@ import InscriptionsTable from "@/components/admin/InscriptionsTable.vue";
   position: fixed;
   top: 0;
   left: 0;
-  width: 350px;      /* Ajuste selon la largeur désirée */
-  height: 100vh;     /* Toute la hauteur de l'écran */
+  width: 350px;      /* Ajuste si besoin */
+  height: 100vh;
   background-color: #fff;
-  z-index: 1000;     /* Devant le fond violet */
+  z-index: 1000;
 }
 
-/* Contenu principal (espace réservé aux inscriptions) */
+/* Zone principale (le reste de l'écran) */
 .main-content {
-  margin-left: 350px; /* Pour laisser de l'espace à la sidebar */
+  margin-left: 350px; /* Laisse la place pour la sidebar */
   padding: 20px;
   height: 100%;
   overflow-y: auto;

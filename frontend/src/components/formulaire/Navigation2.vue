@@ -1,6 +1,7 @@
 <template>
   <div class="navigation">
     <h2>Veuillez choisir un événement</h2>
+
     <!-- Liste des années -->
     <div>
       <h3>Années</h3>
@@ -26,6 +27,7 @@
       <h3>Salons pour la ville {{ selectedCity }}</h3>
       <ul>
         <li v-for="salon in salons" :key="salon.id">
+          <!-- Redirige vers FormulairePage1 avec l'ID du salon -->
           <button @click="selectSalon(salon)">{{ salon.nom }}</button>
         </li>
       </ul>
@@ -87,12 +89,12 @@ const selectCity = async (city) => {
   }
 }
 
-// Action lors du clic sur un salon : redirection vers une page dédiée
+// Rediriger vers FormulairePage1 en passant l'ID du salon sélectionné
 const selectSalon = (salon) => {
-  console.log("Salon sélectionné :", salon)
-  // Redirige vers la route "InfoProspect" avec le paramètre "salon"
-  router.push({ name: "InfoProspect", params: { salon: salon.nom } })
+  router.push(`/${salon.nom}`)
+
 }
+
 
 onMounted(fetchAnnees)
 </script>
@@ -110,14 +112,6 @@ onMounted(fetchAnnees)
 button {
   margin: 0.3rem;
   padding: 0.5rem 1rem;
-  font-family: 'Plus Jakarta Sans', sans-serif;
-}
-
-.delete-btn {
-  background-color: red;
-  color: white;
-  border: none;
-  cursor: pointer;
   font-family: 'Plus Jakarta Sans', sans-serif;
 }
 </style>

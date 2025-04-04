@@ -26,7 +26,7 @@ export default {
 
 <style scoped>
 .home-button {
-  position: fixed;
+  position: absolute;
   top: 20px;
   left: 20px;
   padding: 10px;

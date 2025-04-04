@@ -1,136 +1,94 @@
 <template>
   <div class="inscriptions-table">
-    <h2>Liste des Inscriptions</h2>
-
-    <!-- Barre de recherche -->
-    <div class="search-bar">
-      <input
-        type="text"
-        v-model="searchQuery"
-        placeholder="Rechercher par nom ou prénom..."
-      />
-      <button @click="filterInscriptions">Search</button>
-    </div>
-
-    <!-- Tableau d'affichage -->
-    <table>
+    <h3>Inscriptions pour le salon "{{ salon.nom }}"</h3>
+    <table v-if="inscriptions.length > 0">
       <thead>
       <tr>
         <th>Nom</th>
         <th>Prénom</th>
         <th>Formation</th>
         <th>Ville</th>
-        <th>Mail</th>
+        <th>Email</th>
         <th>Téléphone</th>
-        <th>Département</th>
+        <th>Code Postal</th>
       </tr>
       </thead>
       <tbody>
-      <tr
-        v-for="inscription in filteredInscriptions"
-        :key="inscription.id"
-      >
-        <td>{{ inscription.nom }}</td>
-        <td>{{ inscription.prenom }}</td>
-        <td>{{ inscription.formation }}</td>
-        <td>{{ inscription.ville }}</td>
-        <td>{{ inscription.email }}</td>
-        <td>{{ inscription.telephone }}</td>
-        <!--
-          Si tu gères un champ "codePostal" pour le département,
-          tu peux l'afficher directement.
-          Ou bien, s'il faut extraire le département du code postal,
-          tu peux le faire via une petite logique en JS.
-        -->
-        <td>{{ inscription.codePostal }}</td>
+      <tr v-for="ins in inscriptions" :key="ins.id">
+        <td>{{ ins.nom }}</td>
+        <td>{{ ins.prenom }}</td>
+        <td>{{ ins.formation }}</td>
+        <td>{{ ins.ville }}</td>
+        <td>{{ ins.email }}</td>
+        <td>{{ ins.telephone }}</td>
+        <td>{{ ins.codePostal }}</td>
       </tr>
       </tbody>
     </table>
+    <p v-else>Aucune inscription pour ce salon.</p>
   </div>
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, onMounted, watch } from 'vue'
+
+// Définir le prop "salon" attendu
+const props = defineProps({
+  salon: {
+    type: Object,
+    required: true,
+  },
+})
 
 const inscriptions = ref([])
-const searchQuery = ref('')
 
-// Au montage du composant, on récupère toutes les inscriptions
+// Fonction asynchrone pour récupérer les inscriptions filtrées par salonId
+async function fetchInscriptions() {
+  if (!props.salon || !props.salon.id) {
+    // Si le salon n'est pas défini ou n'a pas d'ID, on ne fait rien
+    return
+  }
+  try {
+    const response = await fetch(`http://localhost:8989/api/inscriptions?salonId=${props.salon.id}`)
+    if (!response.ok) {
+      throw new Error(`Erreur HTTP: ${response.status}`)
+    }
+    inscriptions.value = await response.json()
+  } catch (error) {
+    console.error("Erreur fetch inscriptions:", error)
+  }
+}
+
+// Appeler fetchInscriptions quand le composant est monté
 onMounted(fetchInscriptions)
 
-async function fetchInscriptions() {
-  try {
-    const response = await fetch('http://localhost:8989/api/inscriptions')
-    if (!response.ok) {
-      throw new Error(`Erreur HTTP : ${response.status}`)
-    }
-    const data = await response.json()
-    inscriptions.value = data
-  } catch (error) {
-    console.error('Erreur lors de la récupération des inscriptions :', error)
-  }
-}
-
-// Méthode de filtrage (simple) pour la barre de recherche
-function filterInscriptions() {
-  // On n'a pas forcément besoin de faire quoi que ce soit ici
-  // si on utilise la propriété calculée "filteredInscriptions"
-  // qui se mettra à jour toute seule quand searchQuery change.
-}
-
-// On calcule les inscriptions filtrées (par nom ou prénom)
-const filteredInscriptions = computed(() => {
-  // Si le champ de recherche est vide, on renvoie toutes les inscriptions
-  if (!searchQuery.value) {
-    return inscriptions.value
-  }
-  // Sinon, on filtre par nom ou prénom
-  return inscriptions.value.filter(ins => {
-    const nomMatch = ins.nom?.toLowerCase().includes(searchQuery.value.toLowerCase())
-    const prenomMatch = ins.prenom?.toLowerCase().includes(searchQuery.value.toLowerCase())
-    return nomMatch || prenomMatch
-  })
+// Refetch quand le prop "salon" change
+watch(() => props.salon, () => {
+  fetchInscriptions()
 })
 </script>
 
 <style scoped>
 .inscriptions-table {
+  font-family: 'Plus Jakarta Sans', sans-serif;
   width: 100%;
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 1rem;
+  margin-top: 20px;
+  color: #181818;
 }
 
-.search-bar {
-  display: flex;
-  align-items: center;
-  margin-bottom: 1rem;
-}
-
-.search-bar input {
-  flex: 1;
-  padding: 0.5rem;
-  margin-right: 0.5rem;
-}
-
-.search-bar button {
-  padding: 0.5rem 1rem;
-  cursor: pointer;
-}
-
-/* Style du tableau */
 table {
   width: 100%;
   border-collapse: collapse;
-}
-
-thead {
-  background-color: #eee;
+  margin-top: 1rem;
 }
 
 th, td {
   border: 1px solid #ccc;
-  padding: 0.75rem;
+  padding: 8px;
   text-align: left;
+}
+
+thead {
+  background-color: #f0f0f0;
 }
 </style>
