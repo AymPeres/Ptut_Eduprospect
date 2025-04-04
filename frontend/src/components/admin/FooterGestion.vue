@@ -6,13 +6,39 @@
     <div class="content">
       <p>Espace administrateur</p>
     </div>
+    <!-- Affichage de la navigation avec propagation de l'événement -->
+    <Navigation @salon-chosen="handleSalonChosen" />
+
+    <!-- Bouton pour afficher/cacher le formulaire d'ajout -->
+    <button class="toggle-add-salon" @click="toggleAddSalon">
+      Ajouter un salon
+    </button>
+
+    <!-- Composant AddSalon affiché conditionnellement -->
+    <AddSalon v-if="showAddSalon" />
   </div>
 </template>
 
-<script>
-export default {
-  name: "FooterGestion",
-};
+<script setup>
+import { ref } from 'vue'
+import Navigation from '@/components/Navigation.vue'
+import AddSalon from '@/components/AddSalon.vue'
+
+// On définit l'émission de l'événement "salon-chosen" pour le parent
+const emit = defineEmits(['salon-chosen'])
+
+// Variable réactive pour contrôler l'affichage du formulaire d'ajout
+const showAddSalon = ref(false)
+
+// Fonction pour basculer la visibilité du formulaire d'ajout
+function toggleAddSalon() {
+  showAddSalon.value = !showAddSalon.value
+}
+
+// Fonction qui reçoit l'événement "salon-chosen" de Navigation et le transmet
+function handleSalonChosen(salon) {
+  emit('salon-chosen', salon)
+}
 </script>
 
 <style scoped>
@@ -21,9 +47,8 @@ export default {
   top: 0;
   left: 0;
   width: 300px;
-  min-height: 100vh; /* S'assure que la sidebar s'étend sur toute la hauteur de la fenêtre */
+  min-height: 100vh; /* La sidebar s'étend sur toute la hauteur */
   background-color: white;
-  /* Active le flexbox en colonne et centre horizontalement */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -35,9 +60,20 @@ export default {
 }
 
 .content {
-  color: #333; /* Pour que le texte soit visible sur fond blanc */
+  color: #333;
   font-size: 0.9rem;
   margin-top: 20px;
   text-align: center;
+  margin-bottom: 30px;
+}
+
+.toggle-add-salon {
+  margin-bottom: 20px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  background-color: #007BFF;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
 }
 </style>

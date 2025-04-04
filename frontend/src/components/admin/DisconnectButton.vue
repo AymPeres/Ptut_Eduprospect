@@ -33,6 +33,7 @@ export default {
   padding: 0;
   width: auto; /* Largeur automatique */
   height: auto; /* Hauteur automatique */
+
 }
 
 .disconnect-button:hover {

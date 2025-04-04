@@ -3,7 +3,6 @@
     <HomeButton />
     <div class="info-prospect-container">
       <h1>Formulaire d'inscription pour le salon {{ salon }}</h1>
-
       <form @submit.prevent="submitForm">
         <div class="input-group">
           <label for="name">Nom :</label>
@@ -33,11 +32,9 @@
           <label for="numero">Numéro de téléphone :</label>
           <input type="tel" v-model="numero" required />
         </div>
-
         <button type="submit" class="submit-button">Envoyer</button>
       </form>
     </div>
-
     <Footer />
   </div>
 </template>
@@ -51,6 +48,7 @@ export default {
   components: { HomeButton, Footer },
   data() {
     return {
+      // On récupère ici le paramètre "salon" (id ou nom selon votre config) depuis la route
       salon: this.$route.params.salon,
       name: "",
       surname: "",
@@ -62,8 +60,38 @@ export default {
     };
   },
   methods: {
-    submitForm() {
-      this.$router.push("/questions-prospect");
+    async submitForm() {
+      // On prépare les données de l'inscription en incluant le salon (via son id)
+      const inscriptionData = {
+        nom: this.name,
+        prenom: this.surname,
+        formation: this.formation,
+        ville: this.ville,
+        codePostal: this.codePostal,
+        email: this.email,
+        telephone: this.numero,
+        salon: { id: this.salon }  // Assurez-vous que "salon" correspond à l'ID du salon sélectionné
+      };
+
+      try {
+        const response = await fetch("/api/inscriptions", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(inscriptionData)
+        });
+        if (!response.ok) {
+          throw new Error(`HTTP error: ${response.status}`);
+        }
+        const data = await response.json();
+        alert("Inscription enregistrée avec succès !");
+        // On peut ensuite rediriger vers une autre page, par exemple pour les questions
+        this.$router.push("/questions-prospect");
+      } catch (error) {
+        console.error("Erreur lors de la soumission du formulaire:", error);
+        alert("Erreur lors de l'enregistrement, veuillez réessayer.");
+      }
     },
   },
   beforeRouteLeave(to, from, next) {

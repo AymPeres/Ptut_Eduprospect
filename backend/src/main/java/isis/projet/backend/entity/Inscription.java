@@ -1,83 +1,176 @@
 package isis.projet.backend.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import lombok.*;
 
-@Getter
-@Setter
-@NoArgsConstructor
-@RequiredArgsConstructor
-@ToString
-@EqualsAndHashCode(exclude = "salon")
 @Entity
 @Table(name = "inscriptions")
 public class Inscription {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @NotBlank
     @Column(nullable = false)
-    @NonNull
     private String nom;
 
-    @NotBlank
     @Column(nullable = false)
-    @NonNull
     private String prenom;
 
-    @NotBlank
     @Column(nullable = false)
-    @NonNull
     private String formation;
 
-    @NotBlank
     @Column(nullable = false)
-    @NonNull
     private String ville;
 
-    @NotBlank
     @Column(name = "code_postal", nullable = false)
-    @NonNull
     private String codePostal;
 
-    @NotBlank
     @Column(nullable = false)
-    @NonNull
     private String email;
 
-    @NotBlank
     @Column(nullable = false)
-    @NonNull
     private String telephone;
 
-    @NotBlank
     @Column(nullable = false)
-    @NonNull
     private String sexe;
 
-    @NotBlank
     @Column(nullable = false)
-    @NonNull
     private String statut;
 
-    @NotBlank
     @Column(nullable = false)
-    @NonNull
     private String interet;
 
-    @NotBlank
     @Column(name = "origine_contact", nullable = false)
-    @NonNull
     private String origineContact;
 
     @ManyToOne
-    @JoinColumn(name = "salon_id", nullable = false)
-    @NotNull
-    @JsonIgnore  // Évite la boucle infinie en JSON
-    @NonNull
+    @JoinColumn(name = "salon_id")
     private Salon salon;
+
+    // Constructeur par défaut
+    public Inscription() {
+    }
+
+    // Constructeur avec paramètres
+    public Inscription(String nom, String prenom, String formation, String ville, String codePostal,
+                       String email, String telephone, String sexe, String statut, String interet,
+                       String origineContact, Salon salon) {
+        this.nom = nom;
+        this.prenom = prenom;
+        this.formation = formation;
+        this.ville = ville;
+        this.codePostal = codePostal;
+        this.email = email;
+        this.telephone = telephone;
+        this.sexe = sexe;
+        this.statut = statut;
+        this.interet = interet;
+        this.origineContact = origineContact;
+        this.salon = salon;
+    }
+
+    // Getters et Setters
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public String getPrenom() {
+        return prenom;
+    }
+
+    public void setPrenom(String prenom) {
+        this.prenom = prenom;
+    }
+
+    public String getFormation() {
+        return formation;
+    }
+
+    public void setFormation(String formation) {
+        this.formation = formation;
+    }
+
+    public String getVille() {
+        return ville;
+    }
+
+    public void setVille(String ville) {
+        this.ville = ville;
+    }
+
+    public String getCodePostal() {
+        return codePostal;
+    }
+
+    public void setCodePostal(String codePostal) {
+        this.codePostal = codePostal;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getTelephone() {
+        return telephone;
+    }
+
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
+    }
+
+    public String getSexe() {
+        return sexe;
+    }
+
+    public void setSexe(String sexe) {
+        this.sexe = sexe;
+    }
+
+    public String getStatut() {
+        return statut;
+    }
+
+    public void setStatut(String statut) {
+        this.statut = statut;
+    }
+
+    public String getInteret() {
+        return interet;
+    }
+
+    public void setInteret(String interet) {
+        this.interet = interet;
+    }
+
+    public String getOrigineContact() {
+        return origineContact;
+    }
+
+    public void setOrigineContact(String origineContact) {
+        this.origineContact = origineContact;
+    }
+
+    public Salon getSalon() {
+        return salon;
+    }
+
+    public void setSalon(Salon salon) {
+        this.salon = salon;
+    }
 }

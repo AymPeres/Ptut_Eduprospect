@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class InscriptionService {
@@ -14,28 +13,16 @@ public class InscriptionService {
     @Autowired
     private InscriptionRepository inscriptionRepository;
 
-    // Récupérer toutes les inscriptions
-    public List<Inscription> getAllInscriptions() {
+    public List<Inscription> findAll() {
         return inscriptionRepository.findAll();
     }
 
-    // Récupérer les inscriptions d'un salon spécifique
     public List<Inscription> getInscriptionsBySalonId(Integer salonId) {
         return inscriptionRepository.findBySalonId(salonId);
     }
 
-    // Créer une nouvelle inscription
+    // Ajout de la méthode manquante pour créer une inscription
     public Inscription createInscription(Inscription inscription) {
         return inscriptionRepository.save(inscription);
-    }
-
-    // Récupérer une inscription par son ID
-    public Optional<Inscription> getInscriptionById(Integer id) {
-        return inscriptionRepository.findById(id);
-    }
-
-    // Supprimer une inscription par son ID
-    public void deleteInscription(Integer id) {
-        inscriptionRepository.deleteById(id);
     }
 }

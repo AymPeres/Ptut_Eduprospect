@@ -14,28 +14,39 @@ public class SalonService {
     @Autowired
     private SalonRepository salonRepository;
 
-    // Récupérer tous les salons
+    // CRUD existant
     public List<Salon> getAllSalons() {
         return salonRepository.findAll();
     }
 
-    // Créer un nouveau salon
     public Salon createSalon(Salon salon) {
         return salonRepository.save(salon);
     }
 
-    // Récupérer un salon par son ID
     public Optional<Salon> getSalonById(Integer id) {
         return salonRepository.findById(id);
     }
 
-    // Mettre à jour un salon existant
     public Salon updateSalon(Salon salon) {
         return salonRepository.save(salon);
     }
 
-    // Supprimer un salon par son ID
     public void deleteSalon(Integer id) {
         salonRepository.deleteById(id);
     }
+    // Récupérer toutes les années distinctes
+    public List<Integer> getAllAnnees() {
+        return salonRepository.findDistinctAnnees();
+    }
+
+    // Récupérer toutes les villes pour une année donnée
+    public List<String> getVillesByAnnee(Integer annee) {
+        return salonRepository.findDistinctVillesByAnnee(annee);
+    }
+
+    // Récupérer tous les salons pour une année et une ville
+    public List<Salon> getSalonsByAnneeAndVille(Integer annee, String ville) {
+        return salonRepository.findByAnneeAndVilleOrderByNom(annee, ville);
+    }
 }
+
