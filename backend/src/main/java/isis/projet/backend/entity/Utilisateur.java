@@ -26,7 +26,7 @@ public class Utilisateur {
     @NotBlank
     @Column(name = "mot_de_passe", nullable = false)
     @NonNull
-    private String motDePasse;  // ⚠ Il faudra le hacher avant de l'enregistrer
+    private String Password;  // ⚠ Il faudra le hacher avant de l'enregistrer
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
