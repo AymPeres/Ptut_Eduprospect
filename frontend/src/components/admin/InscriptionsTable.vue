@@ -137,7 +137,7 @@ function exportToExcel() {
   cursor: pointer;
   font-weight: bold;
 }
-/* Style du select pour qu'il s'aligne bien */
+/* Style un peu plus gros du selecteur */
 
 #sortField {
   padding: 0.3rem;
