@@ -1,5 +1,7 @@
 <template>
-  <button class="disconnect-button" @click="confirmDisconnect">Déconnexion</button>
+  <button class="disconnect-button" @click="confirmDisconnect">
+    Déconnexion
+  </button>
 </template>
 
 <script>
@@ -14,7 +16,7 @@ export default {
     },
     disconnect() {
       // Logique de déconnexion, par exemple redirection vers la page de login
-      this.$router.push('/admin/login');
+      this.$router.push('..');
     }
   }
 };
@@ -22,21 +24,22 @@ export default {
 
 <style scoped>
 .disconnect-button {
-  position: absolute;
-  top: -18px; /* Ajustez selon vos besoins */
-  left: 500px; /* Ajustez selon vos besoins */
-  background-color: transparent; /* Fond transparent */
-  color: white; /* Couleur du texte */
-  border: none; /* Pas de bordure */
+  position: relative;
+  top: -18px;       /* Positionne selon ton layout */
+  left: 200px;      /* Positionne selon ton layout */
+  background-color: #ED6962; /* Couleur orange */
+  color: white;
+  border: none;
   cursor: pointer;
-  font-size: 20px; /* Taille du texte */
-  padding: 0;
-  width: auto; /* Largeur automatique */
-  height: auto; /* Hauteur automatique */
+  font-size: 20px;
+  padding: 0.75rem 1.5rem;  /* Espace intérieur pour une apparence de barre */
+  border-radius: 25px;       /* Angles arrondis pour une "pill" */
+  transition: background 0.3s ease, transform 0.2s;
 
 }
 
 .disconnect-button:hover {
-  transform: scale(1.05);
-}
+    background-color: #d85a53; /* Légèrement plus foncé au survol */
+    transform: scale(1.05);
+  }
 </style>

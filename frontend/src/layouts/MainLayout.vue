@@ -38,7 +38,7 @@ export default {
 
 .title {
   font-family: "Plus Jakarta Sans", sans-serif;
-  font-size: 3rem;
+  font-size: 4rem;
   font-weight: bold;
   margin-top: 2rem;
   margin-bottom: 1rem;
