@@ -5,7 +5,7 @@
       <option value="" disabled selected>Sélectionnez votre genre</option>
       <option value="homme">Homme</option>
       <option value="femme">Femme</option>
-      <option value="femme">Autre</option>
+      <option value="autre">Autre</option>
     </select>
 
     <label for="interet">Vous êtes intéressé par :</label>
@@ -43,7 +43,7 @@
 </template>
 
 <script setup>
-import { defineProps, defineEmits } from 'vue';
+import { defineProps, defineEmits, onMounted, onUnmounted } from 'vue';
 
 const props = defineProps({
   inscriptionData: {
@@ -55,10 +55,30 @@ const props = defineProps({
 const emit = defineEmits(['go-back', 'submit']);
 
 function validerEtSoumettre() {
-  // Ici, vous pouvez ajouter des validations supplémentaires si nécessaire
-  // Puis émettre l'événement "submit" pour passer les données globales à la page parent
   emit('submit');
 }
+
+// Intercepter le clic sur le bouton retour du navigateur
+function handlePopState() {
+  const pwd = prompt("Entrez le mot de passe pour quitter cette page :");
+  if (pwd === "1234") {
+    window.removeEventListener("popstate", handlePopState);
+    history.back();
+  } else {
+    // Bloquer la navigation arrière
+    history.pushState(null, document.title, location.href);
+  }
+}
+
+onMounted(() => {
+  // Ajoute un nouvel état dans l'historique pour pouvoir intercepter le retour
+  history.pushState(null, document.title, location.href);
+  window.addEventListener("popstate", handlePopState);
+});
+
+onUnmounted(() => {
+  window.removeEventListener("popstate", handlePopState);
+});
 </script>
 
 <style scoped>

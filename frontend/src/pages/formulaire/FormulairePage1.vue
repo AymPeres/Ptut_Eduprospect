@@ -26,7 +26,7 @@
     </div>
     <div class="input-group">
       <label for="telephone">Numéro de téléphone :</label>
-      <input id="telephone" type="tel" v-model="localData.telephone"  pattern="^[0-9]+$" title="Veuillez entrer uniquement des chiffres" />
+      <input id="telephone" type="tel" v-model="localData.telephone" pattern="^[0-9]+$" title="Veuillez entrer uniquement des chiffres" />
     </div>
     <button type="submit" class="submit-button">
       Suivant
@@ -35,7 +35,7 @@
 </template>
 
 <script setup>
-import { defineProps, defineEmits, reactive } from 'vue'
+import { defineProps, defineEmits, reactive, onMounted, onUnmounted } from 'vue'
 
 const props = defineProps({
   inscriptionData: {
@@ -49,10 +49,29 @@ const emit = defineEmits(['go-next'])
 const localData = reactive({ ...props.inscriptionData })
 
 function validerEtContinuer() {
-  // Si le formulaire n'est pas valide, la validation native s'arrêtera et affichera les messages d'erreur.
   console.log("Données page 1 :", localData)
   emit('go-next', localData)
 }
+
+// Intercepter le bouton retour du navigateur
+function handlePopState() {
+  const pwd = prompt("Entrez le mot de passe pour quitter cette page :")
+  if (pwd === "1234") {
+    window.removeEventListener("popstate", handlePopState)
+    history.back()
+  } else {
+    history.pushState(null, document.title, location.href)
+  }
+}
+
+onMounted(() => {
+  history.pushState(null, document.title, location.href)
+  window.addEventListener("popstate", handlePopState)
+})
+
+onUnmounted(() => {
+  window.removeEventListener("popstate", handlePopState)
+})
 </script>
 
 <style scoped>
