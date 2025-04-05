@@ -107,16 +107,7 @@ body {
   background-size: cover; /* Ajuste l'image à la taille de l'élément */
   background-repeat: no-repeat;
 }
-.background-top-left {
-  position: absolute;
-  top: -175px;
-  right: 600px;
-  width: 400px;
-  height: 400px;
-  background-image: url("@/assets/images/designElement/Trait2PointsOrangeBlancOrange.png");
-  background-size: cover;
-  background-repeat: no-repeat;
-}
+
 
 .background-top-rectangle {
   position: absolute;

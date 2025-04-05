@@ -43,19 +43,20 @@ function handleSalonChosen(salon) {
 
 <style scoped>
 .footer-gestion {
-  position: absolute;
+  position: relative;
   top: 0;
   left: 0;
-  width: 300px;
+  width: 350px;
   min-height: 100vh; /* La sidebar s'étend sur toute la hauteur */
   background-color: white;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
+/* Sidebar fixe */
 
 .logo img {
-  width: 200px; /* Taille du logo */
+  width: 150px; /* Taille du logo */
   height: auto;
 }
 
@@ -75,5 +76,6 @@ function handleSalonChosen(salon) {
   color: #fff;
   border: none;
   border-radius: 4px;
+
 }
 </style>

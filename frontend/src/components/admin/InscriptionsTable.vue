@@ -1,5 +1,6 @@
 <template>
   <div class="inscriptions-table">
+    <div class="main-content">
     <h3>Inscriptions pour le salon "{{ salon.nom }}"</h3>
     <div class="controls">
       <button @click="exportToExcel" class="export-button">Exporter en Excel</button>
@@ -41,6 +42,7 @@
       </tbody>
     </table>
     <p v-else>Aucune inscription pour ce salon.</p>
+  </div>
   </div>
 </template>
 
@@ -144,7 +146,16 @@ function exportToExcel() {
   border-radius: 5px;
   font-size: 1rem;
 }
-
+/* Zone principale (le reste de l'écran) */
+.main-content {
+  margin-left: 315px; /* Laisse la place pour la sidebar */
+  margin-top: 200px;
+  margin-right: -35px;
+  padding: 20px;
+  height: 100%;
+  overflow-y: auto;
+  background-color: #fff; /* Couleur de fond optionnelle */
+}
 .export-button:hover {
   background-color: #e05e57;
 }
@@ -168,6 +179,7 @@ table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 1rem;
+  background-color: #FFFFFF;
 }
 
 th, td {
