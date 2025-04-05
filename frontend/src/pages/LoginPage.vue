@@ -16,7 +16,7 @@
       </div>
 
       <div class="login-actions">
-        <a href="#" class="forgot-link">mot de passe oublié ?</a>
+        <button type="button" class="back-button" @click="goBack">Retour</button>
         <button type="submit" class="login-button">Se connecter</button>
       </div>
     </form>
@@ -44,8 +44,6 @@ const login = async () => {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        // Si vous avez un utilisateur fixe ou un champ username
-        // username: 'admin',
         password: password.value
       })
     });
@@ -65,6 +63,11 @@ const login = async () => {
     error.value = err.message || 'Erreur lors de la connexion';
     console.error('Erreur de connexion:', err);
   }
+};
+
+// Fonction pour revenir à la page précédente
+const goBack = () => {
+  router.back();
 };
 </script>
 
@@ -121,11 +124,20 @@ const login = async () => {
   width: 100%;
 }
 
-/* Lien "mot de passe oublié ?" */
-.forgot-link {
+/* Bouton "Retour" */
+.back-button {
+  background-color: #ED6962;   /* Orange */
   color: #ffffff;
-  font-size: 0.9rem;
-  text-decoration: underline;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s;
+}
+
+.back-button:hover {
+  transform: scale(1.03);
 }
 
 /* Bouton "Se connecter" */
