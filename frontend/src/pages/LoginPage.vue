@@ -2,30 +2,74 @@
   <div class="login-container">
     <h2 class="login-title">Entrez votre mot de passe</h2>
 
-    <form class="login-form">
-      <input type="password" class="password-input" placeholder="Mot de passe" />
+    <form class="login-form" @submit.prevent="login">
+      <input
+        v-model="password"
+        type="password"
+        class="password-input"
+        placeholder="Mot de passe"
+        required
+      />
+
+      <div v-if="error" class="error-message">
+        {{ error }}
+      </div>
 
       <div class="login-actions">
-        <a href="#" class="forgot-link">mot de passe oublié ?</a>
-        <router-link to="/admin" class="login-button">Se connecter</router-link>
-
-
+        <button type="button" class="back-button" @click="goBack">Retour</button>
+        <button type="submit" class="login-button">Se connecter</button>
       </div>
     </form>
   </div>
 </template>
 
-<script>
-export default {
-  name: "LoginPage",
-  methods: {
-    goToAdmin() {
-      this.$router.push("/adminlayout"); // Redirige vers la page admin
-    },
-  },
+<script setup>
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+
+// Variables réactives
+const password = ref('');
+const error = ref(null);
+const router = useRouter();
+
+// Fonction de connexion
+const login = async () => {
+  try {
+    error.value = null;
+
+    // Appel à votre API d'authentification
+    const response = await fetch('/api/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        password: password.value
+      })
+    });
+
+    if (!response.ok) {
+      throw new Error('Mot de passe incorrect');
+    }
+
+    const data = await response.json();
+
+    // Stockez le token dans localStorage ou sessionStorage
+    localStorage.setItem('authToken', data.token);
+
+    // Redirection vers la page admin
+    router.push('/admin');
+  } catch (err) {
+    error.value = err.message || 'Erreur lors de la connexion';
+    console.error('Erreur de connexion:', err);
+  }
+};
+
+// Fonction pour revenir à la page précédente
+const goBack = () => {
+  router.back();
 };
 </script>
-
 
 <style scoped>
 /* 1) Import de la police Plus Jakarta Sans */
@@ -80,11 +124,20 @@ export default {
   width: 100%;
 }
 
-/* Lien "mot de passe oublié ?" */
-.forgot-link {
+/* Bouton "Retour" */
+.back-button {
+  background-color: #ED6962;   /* Orange */
   color: #ffffff;
-  font-size: 0.9rem;
-  text-decoration: underline;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s;
+}
+
+.back-button:hover {
+  transform: scale(1.03);
 }
 
 /* Bouton "Se connecter" */
@@ -103,5 +156,16 @@ export default {
 .login-button:hover {
   background-color: #ED6962;
   transform: scale(1.03);
+}
+
+/* Message d'erreur */
+.error-message {
+  color: #ffffff;
+  background-color: rgba(255, 0, 0, 0.2);
+  padding: 0.5rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  width: 100%;
+  text-align: center;
 }
 </style>
