@@ -21,22 +21,21 @@ public class UtilisateurController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
-        Utilisateur Utilisateur = authService.authenticate(loginRequest.getEmail(), loginRequest.getPassword());
+        // On ne prend en compte que le mot de passe
+        Utilisateur user = authService.authenticate(loginRequest.getPassword());
 
-        if (Utilisateur != null) {
-            // Générer un JWT token (à implémenter selon votre méthode d'authentification)
-            String token = generateToken(Utilisateur);
-
-            return ResponseEntity.ok(new LoginResponse(token, Utilisateur.getEmail()));
+        if (user != null) {
+            // Générer un token JWT (implémentez la logique réelle ici)
+            String token = generateToken(user);
+            return ResponseEntity.ok(new LoginResponse(token, user.getEmail()));
         } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Identifiants invalides");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Mot de passe invalide");
         }
     }
 
     // Méthode à implémenter pour générer un token JWT
     private String generateToken(Utilisateur utilisateur) {
-        // Implémentez cette méthode selon votre système d'authentification
-        // Par exemple avec JWT
+        // Implémentez cette méthode selon votre méthode d'authentification (ex. via jjwt)
         return "jwt";
     }
 }

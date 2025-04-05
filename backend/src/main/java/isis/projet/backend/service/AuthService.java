@@ -1,41 +1,30 @@
+
 package isis.projet.backend.service;
 
-import isis.projet.backend.dao.UtilisateurRepository;
 import isis.projet.backend.entity.Utilisateur;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class AuthService {
 
     @Autowired
-    private UtilisateurRepository adminRepository;
-
-    @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public Utilisateur authenticate(String email, String password) {
-        Optional<Utilisateur> optionalAdmin = adminRepository.findByEmail(email);
-        System.out.println("Tentative de connexion pour l'email : " + email);
+    // Hash du mot de passe autorisé ("1234" haché avec BCrypt)
+    // Remplace cette valeur par le hash réel généré pour "1234"
+    private final String storedHash = "$2a$10$dxp9dePzf7aOofBRzAP6su6R15ns7gqqHGvG46iAS6nsF4FzXVEQe";
 
-        if (optionalAdmin.isPresent()) {
-            System.out.println("Utilisateur trouvé en base de données");
-            Utilisateur utilisateur = optionalAdmin.get();
-            // Débogage de la vérification de mot de passe
-            boolean passwordMatches = passwordEncoder.matches(password, utilisateur.getPassword());
-            System.out.println("Résultat de la vérification du mot de passe : " + passwordMatches);
-
-            if (passwordMatches) {
-                return utilisateur;
-            }
-        } else {
-            System.out.println("Aucun utilisateur trouvé avec cet email");
+    public Utilisateur authenticate(String password) {
+        System.out.println("Tentative de connexion avec le mot de passe fourni");
+        if (passwordEncoder.matches(password, storedHash)) {
+            Utilisateur user = new Utilisateur();
+            // Ici, on peut définir un email par défaut (ou le laisser vide)
+            user.setEmail("default@domain.com");
+            user.setPassword(storedHash);
+            return user;
         }
-
         return null; // Authentification échouée
     }
 }

@@ -38,7 +38,7 @@ const login = async () => {
     error.value = null;
 
     // Appel à votre API d'authentification
-    const response = await fetch('/api/auth/login', {
+    const response = await fetch('/api/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -49,7 +49,7 @@ const login = async () => {
     });
 
     if (!response.ok) {
-      throw new Error('Identifiants incorrects');
+      throw new Error('Mot de passe incorrect');
     }
 
     const data = await response.json();
