@@ -69,6 +69,7 @@ const submitForm = async () => {
   border-radius: 5px;
   max-width: 400px;
   margin-bottom: 30px;
+  color: #181818;
 }
 
 .form-group {
