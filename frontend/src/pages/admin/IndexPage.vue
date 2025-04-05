@@ -24,7 +24,6 @@
 
 <script setup>
 import { ref } from 'vue'
-
 import StatButton from "@/components/admin/statistiques/StatButton.vue"
 import FooterGestion from "@/components/admin/FooterGestion.vue"
 import DisconnectButton from "@/components/admin/DisconnectButton.vue"
@@ -66,21 +65,14 @@ function onSalonChosen(salon) {
 /* Sidebar fixe */
 .sidebar {
   position: fixed;
-  top: 0;
+  top: 0px;
   left: 0;
   width: 350px;      /* Ajuste si besoin */
   height: 100vh;
   background-color: #fff;
   z-index: 1000;
+  overflow-y: scroll;
 }
 
-/* Zone principale (le reste de l'écran) */
-.main-content {
-  margin-left: 350px; /* Laisse la place pour la sidebar */
-  margin-top: 200px;
-  padding: 20px;
-  height: 100%;
-  overflow-y: auto;
-  background-color: #f8f8f8; /* Couleur de fond optionnelle */
-}
+
 </style>
