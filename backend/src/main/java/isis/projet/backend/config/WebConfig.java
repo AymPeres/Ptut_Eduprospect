@@ -20,7 +20,7 @@ public class WebConfig implements WebMvcConfigurer {
                         "http://localhost:5176",
                         "http://localhost:5177",
                         "http://localhost:5178",
-                        "http://localhost:5179"
+                        "http://localhost:5179" //permet de gérer les serveurs
                 )
                 .allowedMethods("*")
                 .allowedHeaders("*")
