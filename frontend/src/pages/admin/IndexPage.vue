@@ -77,6 +77,7 @@ function onSalonChosen(salon) {
 /* Zone principale (le reste de l'écran) */
 .main-content {
   margin-left: 350px; /* Laisse la place pour la sidebar */
+  margin-top: 200px;
   padding: 20px;
   height: 100%;
   overflow-y: auto;

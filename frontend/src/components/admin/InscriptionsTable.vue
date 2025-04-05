@@ -1,6 +1,8 @@
 <template>
   <div class="inscriptions-table">
     <h3>Inscriptions pour le salon "{{ salon.nom }}"</h3>
+    <!-- Bouton pour exporter en Excel -->
+    <button @click="exportToExcel" class="export-button">Exporter en Excel</button>
     <table v-if="inscriptions.length > 0">
       <thead>
       <tr>
@@ -30,9 +32,10 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watch } from 'vue'
+import { ref, onMounted, watch, defineProps } from 'vue'
+import * as XLSX from 'xlsx'
+import { saveAs } from 'file-saver'
 
-// Définir le prop "salon" attendu
 const props = defineProps({
   salon: {
     type: Object,
@@ -42,11 +45,10 @@ const props = defineProps({
 
 const inscriptions = ref([])
 
-// Fonction asynchrone pour récupérer les inscriptions filtrées par salonId
+// Fonction pour récupérer les inscriptions filtrées par salonId
 async function fetchInscriptions() {
   if (!props.salon || !props.salon.id) {
-    // Si le salon n'est pas défini ou n'a pas d'ID, on ne fait rien
-    return
+    return;
   }
   try {
     const response = await fetch(`http://localhost:8989/api/inscriptions?salonId=${props.salon.id}`)
@@ -59,13 +61,27 @@ async function fetchInscriptions() {
   }
 }
 
-// Appeler fetchInscriptions quand le composant est monté
 onMounted(fetchInscriptions)
-
-// Refetch quand le prop "salon" change
 watch(() => props.salon, () => {
   fetchInscriptions()
 })
+
+// Fonction d'exportation en Excel (.xlsx)
+function exportToExcel() {
+  // Convertir les inscriptions en worksheet
+  const worksheet = XLSX.utils.json_to_sheet(inscriptions.value)
+  // Créer un nouveau classeur
+  const workbook = XLSX.utils.book_new()
+  XLSX.utils.book_append_sheet(workbook, worksheet, "Inscriptions")
+  // Générer le buffer Excel
+  const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' })
+  // Créer un Blob pour le fichier
+  const dataBlob = new Blob([excelBuffer], {
+    type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8'
+  })
+  // Déclencher le téléchargement
+  saveAs(dataBlob, "Inscriptions.xlsx")
+}
 </script>
 
 <style scoped>
@@ -74,6 +90,20 @@ watch(() => props.salon, () => {
   width: 100%;
   margin-top: 20px;
   color: #181818;
+}
+
+.export-button {
+  padding: 0.5rem 1rem;
+  margin-bottom: 1rem;
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.export-button:hover {
+  background-color: #0056b3;
 }
 
 table {
