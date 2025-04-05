@@ -1,9 +1,22 @@
 <template>
   <div class="inscriptions-table">
     <h3>Inscriptions pour le salon "{{ salon.nom }}"</h3>
-    <!-- Bouton pour exporter en Excel -->
-    <button @click="exportToExcel" class="export-button">Exporter en Excel</button>
-    <table v-if="inscriptions.length > 0">
+    <div class="controls">
+      <button @click="exportToExcel" class="export-button">Exporter en Excel</button>
+      <label for="sortField">Trier par :</label>
+      <select id="sortField" v-model="sortField">
+        <option value="">Aucun</option>
+        <option value="nom">Nom</option>
+        <option value="prenom">Prénom</option>
+        <option value="formation">Formation</option>
+        <option value="ville">Ville</option>
+        <option value="codePostal">Code Postal</option>
+      </select>
+      <button @click="toggleSortDirection" class="sort-direction-button">
+        {{ sortDirection === 'asc' ? 'Ascendant' : 'Descendant' }}
+      </button>
+    </div>
+    <table v-if="sortedInscriptions.length > 0">
       <thead>
       <tr>
         <th>Nom</th>
@@ -16,7 +29,7 @@
       </tr>
       </thead>
       <tbody>
-      <tr v-for="ins in inscriptions" :key="ins.id">
+      <tr v-for="ins in sortedInscriptions" :key="ins.id">
         <td>{{ ins.nom }}</td>
         <td>{{ ins.prenom }}</td>
         <td>{{ ins.formation }}</td>
@@ -32,7 +45,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watch, defineProps } from 'vue'
+import { ref, onMounted, watch, computed, defineProps } from 'vue'
 import * as XLSX from 'xlsx'
 import { saveAs } from 'file-saver'
 
@@ -47,9 +60,7 @@ const inscriptions = ref([])
 
 // Fonction pour récupérer les inscriptions filtrées par salonId
 async function fetchInscriptions() {
-  if (!props.salon || !props.salon.id) {
-    return;
-  }
+  if (!props.salon || !props.salon.id) return
   try {
     const response = await fetch(`http://localhost:8989/api/inscriptions?salonId=${props.salon.id}`)
     if (!response.ok) {
@@ -66,20 +77,37 @@ watch(() => props.salon, () => {
   fetchInscriptions()
 })
 
-// Fonction d'exportation en Excel (.xlsx)
+// Variables pour le tri
+const sortField = ref('')
+const sortDirection = ref('asc')
+
+// Propriété calculée pour retourner les inscriptions triées
+const sortedInscriptions = computed(() => {
+  if (!sortField.value) return inscriptions.value
+  return [...inscriptions.value].sort((a, b) => {
+    let aField = a[sortField.value] ?? ''
+    let bField = b[sortField.value] ?? ''
+    aField = aField.toString().toLowerCase()
+    bField = bField.toString().toLowerCase()
+    if (aField < bField) return sortDirection.value === 'asc' ? -1 : 1
+    if (aField > bField) return sortDirection.value === 'asc' ? 1 : -1
+    return 0
+  })
+})
+
+function toggleSortDirection() {
+  sortDirection.value = sortDirection.value === 'asc' ? 'desc' : 'asc'
+}
+
+// Fonction pour exporter en Excel (.xlsx)
 function exportToExcel() {
-  // Convertir les inscriptions en worksheet
   const worksheet = XLSX.utils.json_to_sheet(inscriptions.value)
-  // Créer un nouveau classeur
   const workbook = XLSX.utils.book_new()
   XLSX.utils.book_append_sheet(workbook, worksheet, "Inscriptions")
-  // Générer le buffer Excel
   const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' })
-  // Créer un Blob pour le fichier
   const dataBlob = new Blob([excelBuffer], {
     type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8'
   })
-  // Déclencher le téléchargement
   saveAs(dataBlob, "Inscriptions.xlsx")
 }
 </script>
@@ -92,18 +120,48 @@ function exportToExcel() {
   color: #181818;
 }
 
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* Bouton Export en orange (#ED6962) avec angles arrondis (100px) */
 .export-button {
   padding: 0.5rem 1rem;
-  margin-bottom: 1rem;
-  background-color: #007BFF;
+  background-color: #ED6962;
   color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: 100px;
   cursor: pointer;
+  font-weight: bold;
+}
+/* Style du select pour qu'il s'aligne bien */
+
+#sortField {
+  padding: 0.3rem;
+  border-radius: 5px;
+  font-size: 1rem;
 }
 
 .export-button:hover {
-  background-color: #0056b3;
+  background-color: #e05e57;
+}
+
+/* Bouton de tri mis à jour pour correspondre au style */
+.sort-direction-button {
+  padding: 0.5rem 1rem;
+  background-color: #ED6962;
+  color: white;
+  border: none;
+  border-radius: 100px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.sort-direction-button:hover {
+  background-color: #e05e57;
 }
 
 table {
