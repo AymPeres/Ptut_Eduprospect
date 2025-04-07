@@ -13,10 +13,15 @@
       </div>
 
       <p>© 2025 Tous droits réservés - Eduprospect</p>
-      <!-- Partie droite : Logos Inuc et Insa empilés -->
+
+      <!-- Partie droite : Logos Inuc et Insa dans des div séparées -->
       <div class="partners-right">
-        <img src="@/assets/images/logoInuc/horizontal/LOGO-UC-horizontal-Bichro-fondclair.png" alt="logo inuc" class="partner-logo-other" />
-        <img src="@/assets/images/logoInsaPartenaire/PartINSA-GrisRouge.gif" alt="logo insa" class="partner-logo-other" />
+        <div class="partner-logo-inuc">
+          <img src="@/assets/images/logoInuc/horizontal/LOGO-UC-horizontal-Bichro-fondclair.png" alt="logo inuc" class="partner-logo-other" />
+        </div>
+        <div class="partner-logo-insa">
+          <img src="@/assets/images/logoInsaPartenaire/PartINSA-GrisRouge.gif" alt="logo insa" class="partner-logo-other" />
+        </div>
       </div>
     </div>
   </footer>
@@ -38,7 +43,6 @@ footer {
   font-size: 1rem;
   box-sizing: border-box;
   position: relative;
-
 }
 
 .footer-content {
@@ -65,7 +69,7 @@ footer {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 5px; /* Space between address lines */
+  gap: 5px;
 }
 
 .address p {
@@ -85,8 +89,14 @@ footer {
   gap: 10px;
 }
 
-.partner-logo-other {
-  height: 70px;
+/* Styles séparés pour chaque logo */
+.partner-logo-inuc img {
+  height: 100px; /* Taille spécifique du logo Inuc */
+  width: auto;
+}
+
+.partner-logo-insa img {
+  height: 150px; /* Taille spécifique du logo INSA */
   width: auto;
 }
 </style>

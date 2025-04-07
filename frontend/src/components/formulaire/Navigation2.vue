@@ -2,36 +2,32 @@
   <div class="navigation">
     <h2>Veuillez choisir un événement</h2>
 
-    <!-- Liste des années -->
-    <div>
-      <h3>Années</h3>
-      <ul>
-        <li v-for="annee in annees" :key="annee">
-          <button @click="selectAnnee(annee)">{{ annee }}</button>
-        </li>
-      </ul>
-    </div>
+    <!-- Arborescence Année > Ville > Salon -->
+    <ul>
+      <li v-for="annee in annees" :key="annee">
+        <button @click="toggleAnnee(annee)">
+          {{ openedAnnees.has(annee) ? '📂' : '📁' }} {{ annee }}
+        </button>
 
-    <!-- Liste des villes pour l'année sélectionnée -->
-    <div v-if="cities.length">
-      <h3>Villes pour l'année {{ selectedAnnee }}</h3>
-      <ul>
-        <li v-for="city in cities" :key="city">
-          <button @click="selectCity(city)">{{ city }}</button>
-        </li>
-      </ul>
-    </div>
+        <!-- Villes pour l'année -->
+        <ul v-if="openedAnnees.has(annee)">
+          <li v-for="city in citiesByAnnee[annee] || []" :key="city">
+            <button @click="toggleCity(annee, city)">
+              {{ isCityOpen(annee, city) ? '📂' : '📁' }} {{ city }}
+            </button>
 
-    <!-- Liste des salons pour la ville sélectionnée -->
-    <div v-if="salons.length">
-      <h3>Salons pour la ville {{ selectedCity }}</h3>
-      <ul>
-        <li v-for="salon in salons" :key="salon.id">
-          <!-- Redirige vers FormulairePage1 avec l'ID du salon -->
-          <button @click="selectSalon(salon)">{{ salon.nom }}</button>
-        </li>
-      </ul>
-    </div>
+            <!-- Salons pour la ville -->
+            <ul v-if="isCityOpen(annee, city)">
+              <li v-for="salon in salonsByCity[`${annee}-${city}`] || []" :key="salon.id">
+                <button @click="selectSalon(salon)">
+                  {{ salon.nom }}
+                </button>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
   </div>
 </template>
 
@@ -41,62 +37,70 @@ import { useRouter } from 'vue-router'
 
 const router = useRouter()
 
-// Déclaration des variables réactives
-const annees = ref([])
-const cities = ref([])
-const salons = ref([])
-const selectedAnnee = ref(null)
-const selectedCity = ref(null)
 const url = "/api/navigation/annees"
-
-// Récupération des années via fetch
-const fetchAnnees = async () => {
-  try {
-    const response = await fetch(`${url}`)
-    const data = await response.json()
-    annees.value = data
-    console.log("Années :", annees.value)
-  } catch (error) {
-    console.error("Erreur lors du chargement des années :", error)
-  }
-}
-
-// Sélection d'une année et récupération des villes correspondantes
-const selectAnnee = async (annee) => {
-  selectedAnnee.value = annee
-  selectedCity.value = null
-  salons.value = [] // Réinitialisation des salons lors du changement d'année
-  try {
-    const response = await fetch(`${url}/${annee}/villes`)
-    const data = await response.json()
-    cities.value = data
-    console.log("Villes :", cities.value)
-  } catch (error) {
-    console.error(`Erreur lors de la récupération des villes pour l'année ${annee} :`, error)
-  }
-}
-
-// Sélection d'une ville et récupération des salons correspondants
-const selectCity = async (city) => {
-  selectedCity.value = city
-  try {
-    const response = await fetch(`${url}/${selectedAnnee.value}/villes/${city}/salons`)
-    const data = await response.json()
-    salons.value = data
-    console.log("Salons :", salons.value)
-  } catch (error) {
-    console.error(`Erreur lors de la récupération des salons pour la ville ${city} :`, error)
-  }
-}
-
-// Rediriger vers FormulairePage1 en passant l'ID du salon sélectionné
-const selectSalon = (salon) => {
-  router.push(`/${salon.nom}`)
-
-}
-
+const annees = ref([])
+const citiesByAnnee = ref({})
+const salonsByCity = ref({})
+const openedAnnees = ref(new Set())
+const openedCities = ref(new Set())
 
 onMounted(fetchAnnees)
+
+async function fetchAnnees() {
+  try {
+    const res = await fetch(url)
+    annees.value = await res.json()
+  } catch (error) {
+    console.error("Erreur fetch annees :", error)
+  }
+}
+
+function toggleAnnee(annee) {
+  if (openedAnnees.value.has(annee)) {
+    openedAnnees.value.delete(annee)
+  } else {
+    openedAnnees.value.add(annee)
+    fetchCities(annee)
+  }
+}
+
+function toggleCity(annee, city) {
+  const key = `${annee}-${city}`
+  if (openedCities.value.has(key)) {
+    openedCities.value.delete(key)
+  } else {
+    openedCities.value.add(key)
+    fetchSalons(annee, city)
+  }
+}
+
+function isCityOpen(annee, city) {
+  return openedCities.value.has(`${annee}-${city}`)
+}
+
+async function fetchCities(annee) {
+  try {
+    const res = await fetch(`${url}/${annee}/villes`)
+    const data = await res.json()
+    citiesByAnnee.value[annee] = data
+  } catch (error) {
+    console.error("Erreur fetch villes :", error)
+  }
+}
+
+async function fetchSalons(annee, city) {
+  try {
+    const res = await fetch(`${url}/${annee}/villes/${city}/salons`)
+    const data = await res.json()
+    salonsByCity.value[`${annee}-${city}`] = data
+  } catch (error) {
+    console.error("Erreur fetch salons :", error)
+  }
+}
+
+function selectSalon(salon) {
+  router.push(`/${salon.nom}`)
+}
 </script>
 
 <style scoped>
@@ -107,11 +111,31 @@ onMounted(fetchAnnees)
   background-color: white;
   color: black;
   font-family: 'Plus Jakarta Sans', sans-serif;
+  border-radius: 10px;
+}
+
+ul {
+  list-style: none;
+  padding-left: 1rem;
+}
+
+ul ul {
+  border-left: 2px solid #ccc;
+  margin-left: 0.5rem;
+  padding-left: 0.5rem;
 }
 
 button {
   margin: 0.3rem;
   padding: 0.5rem 1rem;
   font-family: 'Plus Jakarta Sans', sans-serif;
+  background-color: #f0f0f0;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+button:hover {
+  background-color: #ddd;
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div class="add-salon">
-    <h2>Ajouter un salon/événement</h2>
+    <h2>Ajouter un événement</h2>
     <form @submit.prevent="submitForm">
       <div class="form-group">
         <label for="annee">Année :</label>
@@ -76,5 +76,14 @@ input {
   width: 100%;
   padding: 0.5rem;
   box-sizing: border-box;
+}
+
+button {
+  background-color: #ED6962;
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 4px;
+  cursor: pointer;
 }
 </style>
