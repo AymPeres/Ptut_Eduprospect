@@ -4,30 +4,15 @@
     <form @submit.prevent="submitForm">
       <div class="form-group">
         <label for="annee">Année :</label>
-        <input
-          type="number"
-          id="annee"
-          v-model.number="salon.annee"
-          required
-        />
+        <input type="number" id="annee" v-model.number="salon.annee" required />
       </div>
       <div class="form-group">
         <label for="ville">Ville :</label>
-        <input
-          type="text"
-          id="ville"
-          v-model="salon.ville"
-          required
-        />
+        <input type="text" id="ville" v-model="salon.ville" required />
       </div>
       <div class="form-group">
         <label for="nom">Nom de l'événement :</label>
-        <input
-          type="text"
-          id="nom"
-          v-model="salon.nom"
-          required
-        />
+        <input type="text" id="nom" v-model="salon.nom" required />
       </div>
       <!-- Ajoute d'autres champs si nécessaire -->
       <button type="submit">Ajouter</button>
@@ -37,7 +22,6 @@
 
 <script setup>
 import { ref } from 'vue';
-import axios from 'axios';
 
 const salon = ref({
   annee: null,
@@ -47,9 +31,16 @@ const salon = ref({
 
 const submitForm = async () => {
   try {
-    // Envoie une requête POST vers l'endpoint existant pour créer un salon
-    const response = await axios.post('http://localhost:8989/api/salons', salon.value);
-    console.log('Salon ajouté:', response.data);
+    const response = await fetch('/api/salons', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(salon.value)
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP error: ${response.status}`);
+    }
+    const data = await response.json();
+    console.log('Salon ajouté:', data);
 
     // Réinitialiser le formulaire après succès
     salon.value = { annee: null, ville: '', nom: '' };

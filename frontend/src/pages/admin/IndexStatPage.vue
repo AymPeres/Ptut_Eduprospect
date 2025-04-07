@@ -1,7 +1,7 @@
 <template>
   <div class="index-page">
 
-    <div class="disconnect-button">
+    <div class="top-bar">
       <DisconnectButton />
     </div>
 
@@ -96,7 +96,14 @@ export default {
   right: 20px;
   z-index: 999;
 }
-
+/* Barre du haut */
+.top-bar {
+  position: absolute;
+  top: 0px;
+  left: 247px;
+  transform: translateX(-50%);
+  z-index: 999;
+}
 .chart-container {
   position: absolute;
   top: 100px; /* Ajustez selon vos besoins */
@@ -106,5 +113,15 @@ export default {
   background-color: #f9f9f9;
   padding: 10px; /* Réduisez le padding */
 }
-
+/* Sidebar fixe */
+.sidebarStat {
+  position: fixed;
+  top: 0px;
+  left: 0;
+  width: 350px;      /* Ajuste si besoin */
+  height: 100vh;
+  background-color: #fff;
+  z-index: 1000;
+  overflow-y: scroll;
+}
 </style>

@@ -45,32 +45,30 @@ export default {
 
 <style scoped>
 .footer-statistique {
-  position: fixed;
+  /* Style inspiré de FooterGestion */
+  position: relative;
   top: 0;
   left: 0;
-  width: 300px;
-  height: 100vh;
+  width: 350px;
+  min-height: 100vh; /* La sidebar s'étend sur toute la hauteur */
   background-color: white;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px 0;
-  box-shadow: 2px 0 5px rgba(0,0,0,0.1);
-  z-index: 1000;
 }
 
 .logo img {
-  width: 200px;
+  width: 150px; /* Même taille que dans FooterGestion */
   height: auto;
   margin-bottom: 20px;
 }
 
 .content {
   color: #333;
-  font-size: 1.2rem;
-  margin: 10px 0 20px;
+  font-size: 0.9rem;
+  margin-top: 20px;
   text-align: center;
-  font-weight: bold;
+  margin-bottom: 30px;
 }
 
 .buttons {
@@ -81,8 +79,9 @@ export default {
   padding: 0 20px;
 }
 
+/* Pour le style des boutons, on peut conserver celui existant */
 .stat-button {
-  background-color: #f1645d;
+  background-color: #ED6962;
   color: white;
   border: none;
   padding: 12px;
