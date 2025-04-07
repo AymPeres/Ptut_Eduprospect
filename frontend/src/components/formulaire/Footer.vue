@@ -1,7 +1,8 @@
 <template>
   <footer class="footer">
     <div class="footer-content">
-      <!-- Partie gauche : Logo ISIS en grand et texte -->
+      <!-- Partie gauche : Logo ISIS -->
+
       <div class="partners-left">
         <img src="@/assets/images/logoIsis/logo-ISIS-horizontal-RVB.svg" alt="logo isis" class="partner-logo-isis" />
         <div class="address">
