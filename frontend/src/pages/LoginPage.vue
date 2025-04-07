@@ -1,5 +1,6 @@
 <template>
   <div class="login-container">
+    <HomeButton />
     <h2 class="login-title">Entrez votre mot de passe</h2>
 
     <form class="login-form" @submit.prevent="login">
@@ -26,6 +27,7 @@
 <script setup>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
+import HomeButton from "@/components/formulaire/HomeButton.vue";
 
 // Variables réactives
 const password = ref('');
