@@ -99,7 +99,7 @@ body {
 /* Nouveau style pour l'élément en haut à droite */
 .background-top-right {
   position: absolute;
-  top: 200px;        /* Espacement du bord supérieur */
+  top: 120px;        /* Espacement du bord supérieur */
   right: 20px;      /* Espacement du bord droit */
   width: 200px;     /* Largeur de l'élément */
   height: 200px;    /* Hauteur de l'élément */
