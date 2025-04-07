@@ -2,31 +2,54 @@
   <form @submit.prevent="validerEtContinuer">
     <div class="input-group">
       <label for="nom">Nom * :</label>
-      <input id="nom" type="text" v-model="localData.nom" required />
+      <input id="nom" type="text" v-model="localData.nom" required placeholder="Entrez votre nom" />
     </div>
     <div class="input-group">
       <label for="prenom">Prénom * :</label>
-      <input id="prenom" type="text" v-model="localData.prenom" required />
+      <input id="prenom" type="text" v-model="localData.prenom" required placeholder="Entrez votre prénom" />
     </div>
     <div class="input-group">
       <label for="formation">Formation * :</label>
-      <input id="formation" type="text" v-model="localData.formation" required />
+      <input id="formation" type="text" v-model="localData.formation" required placeholder="Entrez votre formation" />
     </div>
     <div class="input-group">
       <label for="ville">Ville * :</label>
-      <input id="ville" type="text" v-model="localData.ville" required />
+      <input id="ville" type="text" v-model="localData.ville" required placeholder="Entrez votre ville" />
     </div>
     <div class="input-group">
       <label for="codePostal">Code postal * :</label>
-      <input id="codePostal" type="text" v-model="localData.codePostal" required pattern="^[0-9]+$" title="Veuillez entrer uniquement des chiffres" />
+      <input
+        id="codePostal"
+        type="text"
+        v-model="localData.codePostal"
+        required
+        pattern="^[0-9]+$"
+        title="Veuillez entrer uniquement des chiffres"
+        placeholder="Entrez votre code postal (Chiffres uniquement)"
+      />
     </div>
     <div class="input-group">
       <label for="email">Adresse mail * :</label>
-      <input id="email" type="email" v-model="localData.email" required pattern=".+@.+\..+" title="L'adresse mail doit contenir un '@' et un '.'" />
+      <input
+        id="email"
+        type="email"
+        v-model="localData.email"
+        required
+        pattern=".+@.+\..+"
+        title="L'adresse mail doit contenir un '@' et un '.'"
+        placeholder="Entrez votre adresse mail"
+      />
     </div>
     <div class="input-group">
       <label for="telephone">Numéro de téléphone :</label>
-      <input id="telephone" type="tel" v-model="localData.telephone" pattern="^[0-9]+$" title="Veuillez entrer uniquement des chiffres" />
+      <input
+        id="telephone"
+        type="tel"
+        v-model="localData.telephone"
+        pattern="^[0-9]+$"
+        title="Veuillez entrer uniquement des chiffres"
+        placeholder="Entrez votre numéro de téléphone (facultatif)"
+      />
     </div>
     <button type="submit" class="submit-button">
       Suivant
