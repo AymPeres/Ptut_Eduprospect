@@ -48,7 +48,7 @@ const salon = ref({
 const submitForm = async () => {
   try {
     // Envoie une requête POST vers l'endpoint existant pour créer un salon
-    const response = await axios.post('http://localhost:8989/api/salons', salon.value);
+    const response = await axios.post('/api/salons', salon.value);
     console.log('Salon ajouté:', response.data);
 
     // Réinitialiser le formulaire après succès

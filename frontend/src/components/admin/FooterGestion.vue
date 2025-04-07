@@ -72,7 +72,7 @@ function handleSalonChosen(salon) {
   margin-bottom: 20px;
   padding: 0.5rem 1rem;
   cursor: pointer;
-  background-color: #007BFF;
+  background-color: #ED6962;
   color: #fff;
   border: none;
   border-radius: 4px;
