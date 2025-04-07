@@ -105,13 +105,15 @@ export default {
   z-index: 999;
 }
 .chart-container {
-  position: absolute;
-  top: 100px; /* Ajustez selon vos besoins */
-  left: 370px; /* Ajustez selon vos besoins */
-  width: calc(100% - 360px); /* Réduisez la largeur */
-  height: calc(100vh - 90px); /* Réduisez la hauteur */
-  background-color: #f9f9f9;
-  padding: 10px; /* Réduisez le padding */
+  position: absolute; /* fixed au lieu de absolute pour rester fixé par rapport à la fenêtre */
+  top: 220px;
+  left: 150px;
+  right: 0;
+  bottom: 0;
+  width: 100%; /* Largeur totale */
+  height: 100vh; /* Hauteur totale de la fenêtre */
+  background-color: #FFFFFF;
+  padding: 0; /* Supprimez le padding pour éviter tout débordement */
 }
 /* Sidebar fixe */
 .sidebarStat {

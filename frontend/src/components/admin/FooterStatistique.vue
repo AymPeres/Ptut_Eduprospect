@@ -55,6 +55,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
+  border: 1px solid black; /* Bordure noire sur tout le périmètre */
 }
 
 .logo img {
