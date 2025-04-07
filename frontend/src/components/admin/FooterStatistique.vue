@@ -7,12 +7,12 @@
       <p>Statistiques</p>
     </div>
     <div class="buttons">
-      <button class="stat-button">Proportion par formation</button>
-      <button class="stat-button">Villes/Années/Salons</button>
-      <button class="stat-button">Statut</button>
-      <button class="stat-button">Cycle</button>
-      <button class="stat-button">Connaître Isis</button>
-      <button class="stat-button">Genre</button>
+      <button class="stat-button" @click="showFormationChart">Proportion par formation</button>
+      <button class="stat-button" @click="showVillesAnneesSalonsChart">Villes/Années/Salons</button>
+      <button class="stat-button" @click="showStatutChart">Statut</button>
+      <button class="stat-button" @click="showCycleChart">Cycle</button>
+      <button class="stat-button" @click="showConnaitreIsisChart">Connaître Isis</button>
+      <button class="stat-button" @click="showGenreChart">Genre</button>
     </div>
   </div>
 </template>
@@ -20,31 +20,55 @@
 <script>
 export default {
   name: "FooterStatistique",
+  methods: {
+    showFormationChart() {
+      this.$emit('show-formation-chart');
+    },
+    showVillesAnneesSalonsChart() {
+      this.$emit('show-villes-annees-salons');
+    },
+    showStatutChart() {
+      this.$emit('show-statut-chart');
+    },
+    showCycleChart() {
+      this.$emit('show-cycle-chart');
+    },
+    showConnaitreIsisChart() {
+      this.$emit('show-connaitre-isis-chart');
+    },
+    showGenreChart() {
+      this.$emit('show-genre-chart');
+    }
+  }
 };
 </script>
 
 <style scoped>
 .footer-statistique {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 300px;
-  min-height: 100vh; /* S'assure que la sidebar s'étend sur toute la hauteur de la fenêtre */
+  height: 100vh;
   background-color: white;
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 20px 0;
+  box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+  z-index: 1000;
 }
 
 .logo img {
-  width: 150px; /* Taille du logo */
+  width: 200px;
   height: auto;
+  margin-bottom: 20px;
 }
 
 .content {
-  color: #333; /* Pour que le texte soit visible sur fond blanc */
-  font-size: 1rem;
-  margin: 20px 0;
+  color: #333;
+  font-size: 1.2rem;
+  margin: 10px 0 20px;
   text-align: center;
   font-weight: bold;
 }
@@ -52,26 +76,27 @@ export default {
 .buttons {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 12px;
   width: 100%;
-  align-items: center;
-  margin-top: 20px;
+  padding: 0 20px;
 }
 
 .stat-button {
   background-color: #f1645d;
   color: white;
   border: none;
-  padding: 10px 20px;
-  border-radius: 20px;
+  padding: 12px;
+  border-radius: 25px;
   font-size: 0.9rem;
   cursor: pointer;
-  transition: 0.3s;
-  width: 80%;
+  transition: all 0.3s ease;
+  width: 100%;
   text-align: center;
 }
 
 .stat-button:hover {
   background-color: #d14a44;
+  transform: translateY(-2px);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 </style>
