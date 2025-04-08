@@ -58,6 +58,8 @@ export default {
 </script>
 
 <style scoped>
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700&display=swap");
+
 .stat-cycle {
   width: 100%;
   max-width: 600px;
@@ -67,6 +69,8 @@ export default {
 }
 
 h2 {
+  font-family: "Plus Jakarta Sans", sans-serif;
+
   color: #333;
 }
 </style>

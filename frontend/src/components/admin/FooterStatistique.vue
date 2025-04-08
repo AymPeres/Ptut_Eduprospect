@@ -44,6 +44,8 @@ export default {
 </script>
 
 <style scoped>
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700&display=swap");
+
 .footer-statistique {
   /* Style inspiré de FooterGestion */
   position: relative;
@@ -65,8 +67,8 @@ export default {
 }
 
 .content {
-  color: #333;
-  font-size: 0.9rem;
+  font-family: "Plus Jakarta Sans", sans-serif; color: #333;
+  font-size: 2rem;
   margin-top: 20px;
   text-align: center;
   margin-bottom: 30px;

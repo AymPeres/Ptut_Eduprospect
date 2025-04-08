@@ -47,8 +47,8 @@ export default {
           datasets: [{
             label: 'Nombre de prospects par statut',
             data: values,
-            backgroundColor: "#f1645d",
-            borderColor: "#d14a44",
+            backgroundColor: "#9059a0",
+            borderColor: "#9059a0",
             borderWidth: 1,
           }]
         },
@@ -73,6 +73,8 @@ export default {
 </script>
 
 <style scoped>
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700&display=swap");
+
 .stat-statut {
   width: 100%;
   max-width: 800px;
@@ -82,6 +84,7 @@ export default {
 }
 
 h2 {
+  font-family: "Plus Jakarta Sans", sans-serif;
   color: #333;
 }
 </style>

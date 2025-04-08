@@ -75,7 +75,10 @@ export default {
 </script>
 
 <style scoped>
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700&display=swap");
+
 .stat-genre h2 {
+  font-family: "Plus Jakarta Sans", sans-serif;
   color: #181818;
   text-align: center;
   font-size: 1.5rem;
@@ -85,7 +88,7 @@ export default {
 .chart-container {
   width: 60%;
   margin: 0 auto;
-  background-color: #f9f9f9;
+  background-color: #FFFFFF;
   padding: 20px;
 }
 </style>

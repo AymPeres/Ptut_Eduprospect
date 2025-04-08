@@ -78,7 +78,10 @@ export default {
 };
 </script>
 <style scoped>
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700&display=swap");
+
 .stat-connaitre-isis {
+  font-family: "Plus Jakarta Sans", sans-serif;
   color: #181818;
   width: 100%;
   max-width: 600px;
@@ -86,6 +89,7 @@ export default {
   padding: 20px;
   text-align: center;
 }
+
 
 
 </style>
