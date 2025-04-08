@@ -42,6 +42,8 @@ function handleSalonChosen(salon) {
 </script>
 
 <style scoped>
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700&display=swap");
+
 .footer-gestion {
   position: relative;
   top: 0;
@@ -52,6 +54,8 @@ function handleSalonChosen(salon) {
   display: flex;
   flex-direction: column;
   align-items: center;
+  border: 1px solid black; /* Bordure noire sur tout le périmètre */
+
 }
 /* Sidebar fixe */
 
@@ -61,8 +65,9 @@ function handleSalonChosen(salon) {
 }
 
 .content {
+
   color: #333;
-  font-size: 0.9rem;
+  font-size: 2rem;
   margin-top: 20px;
   text-align: center;
   margin-bottom: 30px;
