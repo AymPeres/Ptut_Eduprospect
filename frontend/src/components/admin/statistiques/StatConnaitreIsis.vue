@@ -7,76 +7,123 @@
   </div>
 </template>
 
-<script>
-import { ref, onMounted } from 'vue';
-import { Chart } from 'chart.js/auto';
-import prospects from '/src/assets/prospectsData.js'; // Importation des prospects
+<script setup>
+import { ref, computed, onMounted } from 'vue'
+import { Chart } from 'chart.js/auto'
 
-export default {
-  name: 'StatConnaitreIsis',
-  setup() {
-    // Comptabilisation du nombre de prospects par mode de connaissance
-    const countProspectsByModeConnaissance = () => {
-      const modeCounts = {
-        'Bouche à oreille': 0,
-        'Site web': 0,
-        'Réseaux sociaux': 0,
-        'Salons': 0,
-        'Professeurs': 0,
-      };
+// Référence pour les inscriptions et l'instance du graphique
+const inscriptions = ref([])
+let chartInstance = null
 
-      prospects.forEach((prospect) => {
-        modeCounts[prospect.connaissance_ecole]++;
-      });
+// Fonction pour récupérer les inscriptions via l'API
+async function fetchInscriptions() {
+  try {
+    const response = await fetch('/api/inscriptions')
+    if (!response.ok) {
+      throw new Error(`HTTP error: ${response.status}`)
+    }
+    inscriptions.value = await response.json()
+  } catch (err) {
+    console.error("Erreur lors de la récupération des inscriptions:", err)
+  }
+}
 
-      return modeCounts;
-    };
+// Mapping entre les valeurs et les labels affichés
+const valueToLabelMap = {
+  'forum': 'Salons',
+  'reseaux': 'Réseaux sociaux',
+  'bouche': 'Bouche à oreille',
+  'site': 'Site web',
+  'Professeur': 'Autre',
+  'autre': 'Autre'
+}
 
-    const modeCounts = countProspectsByModeConnaissance();
 
-    // Données du graphique
-    const data = {
-      labels: ['Bouche à oreille', 'Site web', 'Réseaux sociaux', 'Salons', 'Professeurs'],
+// Calcul réactif des comptes par mode de connaissance
+const modeConnaissanceCounts = computed(() => {
+  const counts = {
+    'Bouche à oreille': 0,
+    'Site web': 0,
+    'Réseaux sociaux': 0,
+    'Salons': 0,
+    'Autre': 0
+  }
+  inscriptions.value.forEach((inscription) => {
+    // On prend la valeur reçue ou "autre" par défaut
+    const origineValue = inscription.origineContact || 'autre'
+    const label = valueToLabelMap[origineValue] || 'Autre'
+    counts[label]++
+  })
+  return counts
+})
+
+// Fonction qui rafraîchit le graphique
+async function updateChart() {
+  await fetchInscriptions()
+  const labels = Object.keys(modeConnaissanceCounts.value)
+  const data = labels.map(label => modeConnaissanceCounts.value[label])
+
+  // Couleurs définies pour chaque segment
+  const backgroundColor = [
+    '#FF5733', // Bouche à oreille
+    '#33FF57', // Site web
+    '#3357FF', // Réseaux sociaux
+    '#F4C342', // Salons
+    '#9C27B0'  // Autre
+  ]
+
+  // Récupère le contexte du canvas
+  const ctx = document.getElementById('connaitreIsisChart').getContext('2d')
+
+  // Si une instance de graphique existe, la détruire avant de recréer une nouvelle instance
+  if (chartInstance) {
+    chartInstance.destroy()
+  }
+
+  chartInstance = new Chart(ctx, {
+    type: 'pie',
+    data: {
+      labels: labels,
       datasets: [
         {
           label: 'Nombre de prospects par mode de connaissance',
-          data: [
-            modeCounts['Bouche à oreille'],
-            modeCounts['Site web'],
-            modeCounts['Réseaux sociaux'],
-            modeCounts['Salons'],
-            modeCounts['Professeurs'],
-          ],
-          backgroundColor: ['#FF5733', '#33FF57', '#3357FF', '#F4C342', '#9C27B0'],
+          data: data,
+          backgroundColor: backgroundColor,
           borderWidth: 1,
         },
       ],
-    };
-
-    // Création du graphique à l'initialisation
-    onMounted(() => {
-      const ctx = document.getElementById('connaitreIsisChart').getContext('2d');
-      new Chart(ctx, {
-        type: 'pie',
-        data: data,
-        options: {
-          responsive: true,
-          plugins: {
-            legend: {
-              position: 'top',
-            },
-            tooltip: {
-              enabled: true,
-            },
-          },
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: 'top',
         },
-      });
-    });
+        tooltip: {
+          enabled: true,
+          callbacks: {
+            label: function(context) {
+              const label = context.label || ''
+              const value = context.raw || 0
+              const total = context.dataset.data.reduce((acc, val) => acc + val, 0)
+              const percentage = Math.round((value / total) * 100)
+              return `${label}: ${value} (${percentage}%)`
+            }
+          }
+        },
+      },
+    },
+  })
+}
 
-    return {};
-  },
-};
+onMounted(async () => {
+  await updateChart()
+})
+
+// Expose updateChart() pour qu'il soit accessible depuis le parent
+defineExpose({ updateChart })
 </script>
+
 <style scoped>
 @import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700&display=swap");
 
@@ -90,6 +137,10 @@ export default {
   text-align: center;
 }
 
-
-
+.chart-container {
+  width: 100%;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #FFFFFF;
+}
 </style>

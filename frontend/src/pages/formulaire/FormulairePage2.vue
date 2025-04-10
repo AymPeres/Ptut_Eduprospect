@@ -25,11 +25,13 @@
     <label for="origineContact">Comment nous avez-vous connus ?</label>
     <select id="origineContact" v-model="inscriptionData.origineContact" required>
       <option value="" disabled selected>Sélectionnez une option</option>
-      <option value="forum">Forum</option>
+      <option value="forum">Forum/Salon</option>
       <option value="reseaux">Réseaux sociaux</option>
       <option value="bouche">Bouche à oreille</option>
+      <option value="site">Site Web</option> <!-- correction ici -->
       <option value="autre">Autre</option>
     </select>
+
 
     <div class="buttons-container">
       <button type="button" class="back-button" @click="$emit('go-back')">
