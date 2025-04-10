@@ -17,10 +17,10 @@ export default {
 
 <style scoped>
 .button {
-  background-color: #ED6962; /* Orange/corail comme sur votre maquette */
+  background-color: #ED6962;
   color: #ffffff;
   border: none;
-  width: 120px; /* Un peu plus large pour contenir "Statistiques" */
+  width: 120px;
   height: 40px;
   border-radius: 100px;
   text-decoration: none;

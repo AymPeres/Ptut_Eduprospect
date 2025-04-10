@@ -7,88 +7,96 @@
   </div>
 </template>
 
-<script>
-import { ref, onMounted } from 'vue';
-import { Chart } from 'chart.js/auto';
-import prospects from '/src/assets/prospectsData.js'; // Importation des prospects
+<script setup>
+import { ref, computed, onMounted } from 'vue'
+import { Chart } from 'chart.js/auto'
 
-export default {
-  name: 'StatGenre',
-  setup() {
-    // Comptabilisation du nombre de prospects par genre
-    const countProspectsByGenre = () => {
-      const genreCounts = {
-        'Homme': 0,
-        'Femme': 0,
-        'Non spécifié': 0,
-      };
+// Stocke les inscriptions récupérées du backend
+const inscriptions = ref([])
 
-      prospects.forEach((prospect) => {
-        genreCounts[prospect.genre]++;
-      });
+// Fonction pour récupérer les inscriptions depuis l'API
+async function fetchInscriptions() {
+  try {
+    const response = await fetch('/api/inscriptions')
+    if (!response.ok) {
+      throw new Error(`HTTP error: ${response.status}`)
+    }
+    inscriptions.value = await response.json()
+  } catch (err) {
+    console.error("Erreur lors de la récupération des inscriptions:", err)
+  }
+}
 
-      return genreCounts;
-    };
+// Calcule le nombre de prospects par genre
+const genreCounts = computed(() => {
+  const counts = {
+    Homme: 0,
+    Femme: 0,
+    Autre: 0,
+  }
+  inscriptions.value.forEach((inscription) => {
+    if (inscription.sexe === 'Homme') counts.Homme++
+    else if (inscription.sexe === 'Femme') counts.Femme++
+    else counts.Autre++
+  })
+  return counts
+})
 
-    const genreCounts = countProspectsByGenre();
+onMounted(async () => {
+  // Récupère d'abord les inscriptions
+  await fetchInscriptions()
 
-    // Données pour le graphique
-    const data = {
-      labels: ['Homme', 'Femme', 'Non spécifié'],
+
+  const ctx = document.getElementById('genreChart').getContext('2d')
+  new Chart(ctx, {
+    type: 'pie',
+    data: {
+      labels: ['Homme', 'Femme', 'Autre'],
       datasets: [
         {
-          label: 'Répartition des genres des prospects',
+          label: 'Répartition des genres',
           data: [
-            genreCounts['Homme'],
-            genreCounts['Femme'],
-            genreCounts['Non spécifié'],
+            genreCounts.value.Homme,
+            genreCounts.value.Femme,
+            genreCounts.value.Autre
           ],
-          backgroundColor: ['#3498db', '#e74c3c', '#95a5a6'],
+          backgroundColor: ['#9059a0', '#ed6962', '#2f2769'],
           borderWidth: 1,
         },
       ],
-    };
-
-    // Création du graphique à l'initialisation
-    onMounted(() => {
-      const ctx = document.getElementById('genreChart').getContext('2d');
-      new Chart(ctx, {
-        type: 'pie',
-        data: data,
-        options: {
-          responsive: true,
-          plugins: {
-            legend: {
-              position: 'top',
-            },
-            tooltip: {
-              enabled: true,
-            },
-          },
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: 'top',
         },
-      });
-    });
-
-    return {};
-  },
-};
+        tooltip: {
+          enabled: true,
+        },
+      },
+    },
+  })
+})
 </script>
 
 <style scoped>
-@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700&display=swap');
 
-.stat-genre h2 {
+.stat-genre {
   font-family: "Plus Jakarta Sans", sans-serif;
   color: #181818;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
   text-align: center;
-  font-size: 1.5rem;
-  margin-bottom: 20px;
 }
 
 .chart-container {
-  width: 60%;
+  width: 100%;
   margin: 0 auto;
-  background-color: #FFFFFF;
   padding: 20px;
+  background-color: #FFFFFF;
 }
 </style>

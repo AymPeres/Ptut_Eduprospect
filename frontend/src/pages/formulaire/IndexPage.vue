@@ -1,12 +1,10 @@
 <template>
   <div class="container">
-    <!-- Bouton "Espace Formulaire" en deux lignes -->
     <router-link to="/formulaire" class="button">
       Espace<br />
       Formulaire
     </router-link>
 
-    <!-- Bouton "Espace Administrateur" en deux lignes -->
     <router-link to="/admin/login" class="button">
       Espace<br />
       Administrateur

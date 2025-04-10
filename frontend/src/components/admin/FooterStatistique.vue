@@ -82,7 +82,7 @@ export default {
   padding: 0 20px;
 }
 
-/* Pour le style des boutons, on peut conserver celui existant */
+
 .stat-button {
   background-color: #ED6962;
   color: white;

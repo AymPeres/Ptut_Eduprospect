@@ -60,7 +60,6 @@ const props = defineProps({
 
 const inscriptions = ref([])
 
-// Fonction pour récupérer les inscriptions filtrées par salonId
 async function fetchInscriptions() {
   if (!props.salon || !props.salon.id) return
   try {
@@ -83,7 +82,6 @@ watch(() => props.salon, () => {
 const sortField = ref('')
 const sortDirection = ref('asc')
 
-// Propriété calculée pour retourner les inscriptions triées
 const sortedInscriptions = computed(() => {
   if (!sortField.value) return inscriptions.value
   return [...inscriptions.value].sort((a, b) => {
@@ -129,7 +127,6 @@ function exportToExcel() {
   margin-bottom: 1rem;
 }
 
-/* Bouton Export en orange (#ED6962) avec angles arrondis (100px) */
 .export-button {
   padding: 0.5rem 1rem;
   background-color: #ED6962;
@@ -139,28 +136,25 @@ function exportToExcel() {
   cursor: pointer;
   font-weight: bold;
 }
-/* Style un peu plus gros du selecteur */
 
 #sortField {
   padding: 0.3rem;
   border-radius: 5px;
   font-size: 1rem;
 }
-/* Zone principale (le reste de l'écran) */
 .main-content {
-  margin-left: 315px; /* Laisse la place pour la sidebar */
+  margin-left: 315px;
   margin-top: 200px;
   margin-right: -35px;
   padding: 20px;
   height: 100%;
   overflow-y: auto;
-  background-color: #fff; /* Couleur de fond optionnelle */
+  background-color: #fff;
 }
 .export-button:hover {
   background-color: #e05e57;
 }
 
-/* Bouton de tri mis à jour pour correspondre au style */
 .sort-direction-button {
   padding: 0.5rem 1rem;
   background-color: #ED6962;

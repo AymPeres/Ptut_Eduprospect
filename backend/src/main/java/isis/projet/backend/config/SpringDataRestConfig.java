@@ -16,7 +16,7 @@ public class SpringDataRestConfig implements RepositoryRestConfigurer {
 
     @Override
     public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config, CorsRegistry cors) {
-        // Expose les id de toutes les entités dans l'API REST
+
         config.exposeIdsFor(
                 entityManager.getMetamodel()
                         .getEntities()
@@ -25,9 +25,9 @@ public class SpringDataRestConfig implements RepositoryRestConfigurer {
                         .toArray(Class[]::new)
         );
 
-        // Configuration CORS pour autoriser les requêtes de ton frontend
+        // Configuration CORS pour autoriser les requêtes
         cors.addMapping("/**")
-                .allowedOrigins("http://localhost:5173")  // Remplace par l'URL de ton front si besoin
+                .allowedOrigins("http://localhost:5173")
                 .allowedMethods("*")
                 .allowedHeaders("*")
                 .allowCredentials(true);

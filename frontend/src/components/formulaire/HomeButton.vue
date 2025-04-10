@@ -1,6 +1,5 @@
 <template>
   <button @click="goHome" class="home-button">
-    <!-- SVG de la maison en blanc -->
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
       <path d="M12 3l10 9h-3v7h-6v-5h-2v5H3v-7H0z" fill="white"/>
     </svg>

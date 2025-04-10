@@ -10,8 +10,7 @@ export default {
   methods: {
     goToStats() {
       this.$router.push({ name: "AdminStatPage" });
-      // Ou si vous préférez utiliser le nom de la route
-      // this.$router.push({ name: "AdminStatistiques" });
+
     },
   },
 };
@@ -19,10 +18,10 @@ export default {
 
 <style scoped>
 .stat-button {
-  background-color: #ED6962; /* Orange/corail comme sur votre maquette */
+  background-color: #ED6962;
   color: #ffffff;
   border: none;
-  width: 120px; /* Un peu plus large pour contenir "Statistiques" */
+  width: 120px;
   height: 40px;
   border-radius: 100px;
   text-decoration: none;
@@ -36,7 +35,7 @@ export default {
 }
 
 .stat-button:hover {
-  background-color: #d85a53; /* Légèrement plus foncé au survol */
+  background-color: #d85a53;
   transform: scale(1.05);
 }
 

@@ -41,7 +41,7 @@ export default {
   },
   methods: {
     fetchTree() {
-      // Appel à ton endpoint back-end (ajuste l'URL si besoin)
+      // Appel à le endpoint back-end
       axios.get('/api/files')
         .then(response => {
           // Stocke la réponse dans treeData
@@ -51,13 +51,13 @@ export default {
         })
         .catch(error => {
           console.error("Erreur lors de la récupération de l'arborescence :", error)
-          // On arrête aussi le chargement même en cas d'erreur
+
           this.loading = false
         })
     }
   },
   mounted() {
-    // Appel initial pour charger les données
+
     this.fetchTree()
   }
 }

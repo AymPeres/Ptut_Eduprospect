@@ -1,7 +1,6 @@
 <template>
   <div class="formulaire">
     <HomeButton />
-    <!-- Intégration du composant Navigation2 pour la sélection -->
     <Navigation2 />
   </div>
 </template>

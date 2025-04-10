@@ -1,66 +1,89 @@
 <template>
-  <div class="stat-cycle">
-    <h2>Statistiques par Cycle</h2>
-    <canvas id="cycleChart"></canvas>
+  <div class="stat-interet">
+    <h2>Répartition par Intérêt</h2>
+    <div class="chart-container">
+      <canvas id="interetChart"></canvas>
+    </div>
   </div>
 </template>
 
-<script>
-import { ref, onMounted } from "vue";
-import { Chart } from "chart.js/auto";
-import prospects from "/src/assets/prospectsData.js"; // Le fichier des prospects
+<script setup>
+import { ref, computed, onMounted } from 'vue'
+import { Chart } from 'chart.js/auto'
 
-export default {
-  name: "StatCycle",
-  setup() {
-    const cycles = ["Ingénieur", "Préparatoire"];
+// Stocke les inscriptions récupérées depuis le backend
+const inscriptions = ref([])
 
-    // Compter le nombre de prospects par cycle
-    const countProspectsByCycle = () => {
-      const cycleCounts = cycles.reduce((acc, cycle) => {
-        acc[cycle] = 0;
-        return acc;
-      }, {});
-
-      prospects.forEach(prospect => {
-        cycleCounts[prospect.cycle]++;
-      });
-
-      return cycleCounts;
-    };
-
-    const cycleCounts = countProspectsByCycle();
-
-    // Création du graphique
-    onMounted(() => {
-      const ctx = document.getElementById("cycleChart").getContext("2d");
-      new Chart(ctx, {
-        type: "pie",
-        data: {
-          labels: cycles,
-          datasets: [{
-            label: 'Nombre de prospects par cycle',
-            data: cycles.map(cycle => cycleCounts[cycle]),
-            backgroundColor: ["#4B0082", "#a1a1ff"], // Choisir des couleurs adaptées (violet et bleu foncé)
-            borderColor: "#FFFFFF",
-            borderWidth: 1,
-          }]
-        },
-        options: {
-          responsive: true
-        }
-      });
-    });
-
-    return {};
+// Fonction pour récupérer les inscriptions via l'API
+async function fetchInscriptions() {
+  try {
+    const response = await fetch('/api/inscriptions')
+    if (!response.ok) {
+      throw new Error(`HTTP error: ${response.status}`)
+    }
+    inscriptions.value = await response.json()
+  } catch (err) {
+    console.error("Erreur lors de la récupération des inscriptions:", err)
   }
-};
+}
+
+// Calcule le nombre d'inscriptions par intérêt
+const interestCounts = computed(() => {
+  // On attend deux valeurs : 'cycle-prepa' et 'cycle-ingenieur'
+  const counts = {
+    'cycle-prepa': 0,
+    'Cycle ingénieur': 0
+  }
+  inscriptions.value.forEach((inscription) => {
+    if (inscription.interet === 'cycle-prepa') counts['cycle-prepa']++
+    else if (inscription.interet === 'Cycle ingénieur') counts['Cycle ingénieur']++
+  })
+  return counts
+})
+
+onMounted(async () => {
+  // Récupère les inscriptions
+  await fetchInscriptions()
+
+  // Création du graphique une fois les données chargées
+  const ctx = document.getElementById('interetChart').getContext('2d')
+  new Chart(ctx, {
+    type: 'pie',
+    data: {
+      labels: ['Cycle préparatoire', 'Cycle ingénieur'],
+      datasets: [
+        {
+          label: 'Répartition par Intérêt',
+          data: [
+            interestCounts.value['cycle-prepa'],
+            interestCounts.value['Cycle ingénieur']
+          ],
+          backgroundColor: ['#9059a0', '#ed6962'], // Ajuste les couleurs si besoin
+          borderWidth: 1,
+        },
+      ],
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: 'top',
+        },
+        tooltip: {
+          enabled: true,
+        },
+      },
+    },
+  })
+})
 </script>
 
 <style scoped>
-@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700&display=swap');
 
-.stat-cycle {
+.stat-interet {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  color: #181818;
   width: 100%;
   max-width: 600px;
   margin: 0 auto;
@@ -68,9 +91,10 @@ export default {
   text-align: center;
 }
 
-h2 {
-  font-family: "Plus Jakarta Sans", sans-serif;
-
-  color: #333;
+.chart-container {
+  width: 100%;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #FFFFFF;
 }
 </style>

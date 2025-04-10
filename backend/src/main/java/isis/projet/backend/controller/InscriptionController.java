@@ -24,18 +24,14 @@ public class InscriptionController {
 
     @PostMapping
     public ResponseEntity<Inscription> createInscription(@RequestBody Inscription inscription) {
-        // Vérifier que l'inscription contient un salon avec un ID renseigné
         if (inscription.getSalon() == null || inscription.getSalon().getId() == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        // Récupérer l'entité Salon depuis la BDD
         Optional<Salon> salonOpt = salonRepository.findById(inscription.getSalon().getId());
         if (!salonOpt.isPresent()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        // Associer l'entité Salon à l'inscription
         inscription.setSalon(salonOpt.get());
-        // Sauvegarder l'inscription
         Inscription saved = inscriptionService.createInscription(inscription);
         return new ResponseEntity<>(saved, HttpStatus.CREATED);
     }
@@ -43,11 +39,9 @@ public class InscriptionController {
     @GetMapping
     public ResponseEntity<List<Inscription>> getInscriptions(@RequestParam(required = false) Integer salonId) {
         if (salonId != null) {
-            // Utiliser la méthode findBySalonId
             List<Inscription> inscriptions = inscriptionService.getInscriptionsBySalonId(salonId);
             return ResponseEntity.ok(inscriptions);
         } else {
-            // Sinon, renvoyer toutes les inscriptions
             List<Inscription> inscriptions = inscriptionService.findAll();
             return ResponseEntity.ok(inscriptions);
         }

@@ -15,7 +15,6 @@ export default {
       }
     },
     disconnect() {
-      // Logique de déconnexion, par exemple redirection vers la page de login
       this.$router.push('..');
     }
   }
@@ -25,15 +24,15 @@ export default {
 <style scoped>
 .disconnect-button {
   position: relative;
-  top: -18px;       /* Positionne selon ton layout */
-  left: 200px;      /* Positionne selon ton layout */
+  top: -18px;
+  left: 200px;
   background-color: #ED6962; /* Couleur orange */
   color: white;
   border: none;
   cursor: pointer;
   font-size: 20px;
-  padding: 0.75rem 1.5rem;  /* Espace intérieur pour une apparence de barre */
-  border-radius: 25px;       /* Angles arrondis pour une "pill" */
+  padding: 0.75rem 1.5rem;
+  border-radius: 25px;
   transition: background 0.3s ease, transform 0.2s;
 
 }

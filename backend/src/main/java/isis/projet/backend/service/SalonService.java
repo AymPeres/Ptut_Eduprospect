@@ -14,7 +14,6 @@ public class SalonService {
     @Autowired
     private SalonRepository salonRepository;
 
-    // CRUD existant
     public List<Salon> getAllSalons() {
         return salonRepository.findAll();
     }

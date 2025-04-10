@@ -26,11 +26,11 @@ public class Utilisateur {
     @NotBlank
     @Column(name = "mot_de_passe", nullable = false)
     @NonNull
-    private String Password;  // ⚠ Il faudra le hacher avant de l'enregistrer
+    private String Password;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private Role role = Role.user;  // Par défaut, un utilisateur est "user"
+    private Role role = Role.user;
 
     public enum Role {
         admin, user

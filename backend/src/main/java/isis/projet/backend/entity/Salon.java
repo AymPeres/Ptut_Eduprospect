@@ -33,6 +33,6 @@ public class Salon {
     private Integer annee;
 
     @OneToMany(mappedBy = "salon", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore  // Évite la boucle infinie dans les réponses JSON
+    @JsonIgnore
     private List<Inscription> inscriptions;
 }

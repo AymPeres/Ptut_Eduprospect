@@ -4,11 +4,9 @@
     <div class="info-prospect-container">
       <h1>Formulaire d'inscription pour le salon {{ salon }}</h1>
 
-      <!-- Affichage conditionnel des pages -->
 
       <div v-if="etape === 1">
 
-        <!-- Passe les données globales au composant enfant -->
 
         <FormulairePage1 :inscriptionData="inscriptionData" @go-next="passerAEtape2" />
 
@@ -68,7 +66,6 @@ const salon = route.params.salon;
 console.log(salon)
 
 
-// Objet global partagé pour stocker les données du formulaire
 
 const inscriptionData = reactive({
 
@@ -114,7 +111,6 @@ function passerAEtape1() {
 
 function passerAEtape2(dataPage1) {
 
-  // Met à jour inscriptionData avec les données reçues de la page 1
 
   Object.assign(inscriptionData, dataPage1)
 
@@ -158,7 +154,6 @@ async function soumettreFormulaire() {
 
     message.value = "Inscription enregistrée avec succès !"
 
-    // Optionnel : rediriger après le succès
 
     etape.value = 1
 
