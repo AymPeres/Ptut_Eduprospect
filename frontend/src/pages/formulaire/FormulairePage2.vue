@@ -18,7 +18,7 @@
     <label for="statut">Sous statut :</label>
     <select id="statut" v-model="inscriptionData.statut" required>
       <option value="" disabled selected>Sélectionnez votre statut</option>
-      <option value="apprenti">Apprenti</option>
+      <option value="Apprenti">Apprenti</option>
       <option value="etudiant">Étudiant</option>
     </select>
 

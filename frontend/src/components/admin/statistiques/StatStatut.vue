@@ -1,90 +1,103 @@
 <template>
   <div class="stat-statut">
     <h2>Nombre de Prospects par Statut</h2>
-    <canvas id="statutChart"></canvas>
+    <div class="chart-container">
+      <canvas id="statutChart"></canvas>
+    </div>
   </div>
 </template>
 
-<script>
-import { ref, onMounted } from "vue";
-import Chart from 'chart.js/auto';
-import prospects from "@/assets/prospectsData.js"; // Assurez-vous que le chemin est correct
+<script setup>
+import { ref, computed, onMounted } from 'vue'
+import { Chart } from 'chart.js/auto'
 
-export default {
-  name: "StatStatut",
-  setup() {
-    const chart = ref(null);
+// Stocke les inscriptions (ou prospects) récupérées depuis l'API
+const inscriptions = ref([])
 
-    const countProspectsByStatut = () => {
-      const counts = {};
-      prospects.forEach(prospect => {
-        const key = prospect.statut;
-        if (key !== undefined && key !== null) {
-          counts[key] = (counts[key] || 0) + 1;
-        }
-      });
-      console.log("Counts for statut:", counts); // Vérifiez les comptages
-      return counts;
-    };
-
-    const createChart = () => {
-      const ctx = document.getElementById("statutChart").getContext("2d");
-      if (!ctx) {
-        console.error("Canvas context not found");
-        return;
-      }
-
-      const data = countProspectsByStatut();
-
-      // Vérifiez que les données ne contiennent pas de valeurs null ou undefined
-      const labels = Object.keys(data).filter(label => label !== null && label !== undefined);
-      const values = labels.map(label => data[label]);
-
-      chart.value = new Chart(ctx, {
-        type: "bar",
-        data: {
-          labels: labels,
-          datasets: [{
-            label: 'Nombre de prospects par statut',
-            data: values,
-            backgroundColor: "#9059a0",
-            borderColor: "#9059a0",
-            borderWidth: 1,
-          }]
-        },
-        options: {
-          responsive: true,
-          scales: {
-            y: {
-              beginAtZero: true,
-            }
-          }
-        }
-      });
-    };
-
-    onMounted(() => {
-      createChart();
-    });
-
-    return {};
+// Fonction pour récupérer les inscriptions via l'API
+async function fetchInscriptions() {
+  try {
+    const response = await fetch('/api/inscriptions')
+    if (!response.ok) {
+      throw new Error(`HTTP error: ${response.status}`)
+    }
+    // On attend ici que l'API renvoie un tableau d'objets comportant la propriété "statut"
+    inscriptions.value = await response.json()
+  } catch (err) {
+    console.error("Erreur lors de la récupération des inscriptions:", err)
   }
-};
+}
+
+// Calcule le nombre de prospects par statut
+const statutCounts = computed(() => {
+  const counts = {}
+  inscriptions.value.forEach(inscription => {
+    // On vérifie que la propriété "statut" est définie
+    if (inscription.statut !== undefined && inscription.statut !== null) {
+      counts[inscription.statut] = (counts[inscription.statut] || 0) + 1
+    }
+  })
+  return counts
+})
+
+onMounted(async () => {
+  await fetchInscriptions()
+
+  // Récupère le contexte du canvas du graphique
+  const ctx = document.getElementById('statutChart').getContext('2d')
+  const dataCounts = statutCounts.value
+
+  // Prépare les labels et valeurs
+  const labels = Object.keys(dataCounts)
+  const values = labels.map(label => dataCounts[label])
+
+  // Création du graphique en barres
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: 'Nombre de prospects par statut',
+        data: values,
+        backgroundColor: '#9059a0', // Couleur d'arrière-plan pour les barres
+        borderColor: '#9059a0',
+        borderWidth: 1,
+      }]
+    },
+    options: {
+      responsive: true,
+      scales: {
+        y: {
+          beginAtZero: true,
+        }
+      },
+      plugins: {
+        legend: {
+          display: false // On masque la légende si non nécessaire
+        },
+        tooltip: {
+          enabled: true,
+        },
+      }
+    }
+  })
+})
 </script>
 
 <style scoped>
-@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700&display=swap');
 
 .stat-statut {
-  width: 100%;
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
   text-align: center;
+  color: #181818;
+  margin-top: 20px;
 }
 
-h2 {
-  font-family: "Plus Jakarta Sans", sans-serif;
-  color: #333;
+.chart-container {
+  width: 60%;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #FFFFFF;
 }
 </style>
