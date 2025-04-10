@@ -6,122 +6,177 @@
       <button @click="setCriterion('annee')">Année</button>
       <button @click="setCriterion('salon')">Salon</button>
     </div>
-    <canvas id="nbProspectChart"></canvas>
+    <div class="chart-container">
+      <canvas id="nbProspectChart"></canvas>
+    </div>
   </div>
 </template>
 
-<script>
-import { ref, onMounted, watch } from "vue";
-import Chart from 'chart.js/auto';
-import prospects from "@/assets/prospectsData.js"; // Assurez-vous que le chemin est correct
+<script setup>
+import { ref, onMounted, watch } from 'vue'
+import { Chart } from 'chart.js/auto'
 
-export default {
-  name: "StatNbProspect",
-  setup() {
-    const selectedCriterion = ref(null);
-    const chart = ref(null);
+// Stocke les inscriptions récupérées depuis l'API
+const inscriptions = ref([])
+// Critère sélectionné (par défaut "ville")
+const selectedCriterion = ref('ville')
+// Référence vers le graphique
+const chart = ref(null)
 
-    const countProspectsByCriterion = (criterion) => {
-      const counts = {};
-      prospects.forEach(prospect => {
-        const key = prospect[criterion];
-        if (key !== undefined && key !== null) {
-          counts[key] = (counts[key] || 0) + 1;
-        }
-      });
-      return counts;
-    };
-
-    const updateChart = () => {
-      if (chart.value) {
-        chart.value.destroy();
-        chart.value = null; // Assurez-vous que la référence est bien nettoyée
-      }
-
-      const ctx = document.getElementById("nbProspectChart").getContext("2d");
-      if (!ctx) {
-        console.error("Canvas context not found");
-        return;
-      }
-
-      if (!selectedCriterion.value) {
-        console.warn("No criterion selected");
-        return;
-      }
-
-      const data = countProspectsByCriterion(selectedCriterion.value);
-      console.log("Data for chart:", data); // Vérifiez les données
-
-      const labels = Object.keys(data);
-      const values = Object.values(data);
-
-      if (labels.length === 0 || values.length === 0) {
-        console.warn("No data available for the selected criterion");
-        return;
-      }
-
-      chart.value = new Chart(ctx, {
-        type: "bar",
-        data: {
-          labels: labels,
-          datasets: [{
-            label: `Nombre de prospects par ${selectedCriterion.value}`,
-            data: values,
-            backgroundColor: "#9059a0",
-            borderColor: "#9059a0",
-            borderWidth: 1,
-          }]
-        },
-        options: {
-          responsive: true,
-          animation: false, // Désactivez les animations pour tester
-          scales: {
-            y: {
-              beginAtZero: true,
-            }
-          }
-        }
-      });
-    };
-
-    const setCriterion = (criterion) => {
-      selectedCriterion.value = criterion;
-      console.log("Selected criterion:", criterion); // Vérifiez le critère sélectionné
-    };
-
-    onMounted(() => {
-      // Initialiser avec un critère par défaut si nécessaire
-      setCriterion('ville');
-    });
-
-    watch(selectedCriterion, () => {
-      updateChart();
-    });
-
-    return {
-      selectedCriterion,
-      setCriterion,
-      updateChart
-    };
+// Fonction pour récupérer les inscriptions via l'API
+async function fetchInscriptions() {
+  try {
+    const response = await fetch('/api/inscriptions')
+    if (!response.ok) {
+      throw new Error(`HTTP error: ${response.status}`)
+    }
+    inscriptions.value = await response.json()
+    console.log("Inscriptions récupérées :", inscriptions.value)
+  } catch (error) {
+    console.error("Erreur lors de la récupération des inscriptions:", error)
   }
-};
+}
+
+// Calcule le nombre de prospects selon le critère choisi
+function countProspectsByCriterion(criterion) {
+  const counts = {}
+
+  inscriptions.value.forEach(inscription => {
+    let key = ''
+    if (criterion === 'ville') {
+      // Pour le critère "ville", utiliser la propriété `ville` de l'inscription (renseignée par l'étudiant)
+      key = inscription.ville ? inscription.ville.trim() : 'Non spécifiée'
+    }
+    else if (criterion === 'annee') {
+      // Pour "annee", on recherche dans l'objet 'salon' le champ 'annee'
+      const data = inscription.salon
+      if (data && data.annee) {
+        key = data.annee.toString()
+      } else {
+        key = 'Année inconnue'
+      }
+    }
+    else if (criterion === 'salon') {
+      // Pour "salon", utiliser par exemple le champ 'nom' dans l'objet 'salon'
+      const data = inscription.salon
+      if (data && data.nom) {
+        key = data.nom.trim()
+      } else {
+        key = 'Salon non spécifié'
+      }
+    }
+
+    if (key !== undefined && key !== null && key !== '') {
+      counts[key] = (counts[key] || 0) + 1
+    }
+  })
+
+  console.log(`Comptage pour le critère "${criterion}" :`, counts)
+  return counts
+}
+
+// Crée ou met à jour le graphique
+function updateChart() {
+  // Détruire le graphique existant s'il existe déjà
+  if (chart.value) {
+    chart.value.destroy()
+    chart.value = null
+  }
+
+  const ctx = document.getElementById("nbProspectChart")?.getContext("2d")
+  if (!ctx) {
+    console.error("Canvas context not found")
+    return
+  }
+
+  if (!selectedCriterion.value) {
+    console.warn("No criterion selected")
+    return
+  }
+
+  const data = countProspectsByCriterion(selectedCriterion.value)
+  const labels = Object.keys(data)
+  const values = labels.map(label => data[label])
+
+  if (labels.length === 0 || values.length === 0) {
+    console.warn("No data available for the selected criterion")
+    return
+  }
+
+  // Définir le libellé approprié selon le critère
+  let labelText
+  switch(selectedCriterion.value) {
+    case 'ville':
+      labelText = 'Nombre de prospects par ville'
+      break
+    case 'annee':
+      labelText = 'Nombre de prospects par année'
+      break
+    case 'salon':
+      labelText = 'Nombre de prospects par salon'
+      break
+    default:
+      labelText = `Nombre de prospects par ${selectedCriterion.value}`
+  }
+
+  chart.value = new Chart(ctx, {
+    type: "bar",
+    data: {
+      labels: labels,
+      datasets: [{
+        label: labelText,
+        data: values,
+        backgroundColor: "#9059a0",
+        borderColor: "#9059a0",
+        borderWidth: 1,
+      }]
+    },
+    options: {
+      responsive: true,
+      animation: false,
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      },
+      plugins: {
+        legend: {
+          position: 'top'
+        },
+        tooltip: {
+          enabled: true,
+        },
+      }
+    }
+  })
+  console.log("Graphique mis à jour avec le critère :", selectedCriterion.value)
+}
+
+// Met à jour le critère et donc le graphique
+function setCriterion(criterion) {
+  selectedCriterion.value = criterion
+  console.log("Critère sélectionné :", criterion)
+}
+
+onMounted(async () => {
+  await fetchInscriptions()
+  updateChart()
+})
+
+// Met à jour le graphique dès que le critère change
+watch(selectedCriterion, () => {
+  updateChart()
+})
 </script>
 
 <style scoped>
 @import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700&display=swap");
 
-
 .stat-nb-prospect {
-  width: 100%;
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
   text-align: center;
-}
-
-h2 {
-  font-family: "Plus Jakarta Sans", sans-serif;
-  color: #333;
+  color: #181818;
+  margin-top: 20px;
 }
 
 .filters {
@@ -143,5 +198,12 @@ h2 {
 
 .filters button:hover {
   background-color: #d14a44;
+}
+
+.chart-container {
+  width: 60%;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #FFFFFF;
 }
 </style>
