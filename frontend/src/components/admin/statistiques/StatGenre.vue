@@ -62,7 +62,7 @@ onMounted(async () => {
             genreCounts.value.Femme,
             genreCounts.value.Autre
           ],
-          backgroundColor: ['#3498db', '#e74c3c', '#95a5a6'],
+          backgroundColor: ['#9059a0', '#ed6962', '#2f2769'],
           borderWidth: 1,
         },
       ],
@@ -86,14 +86,17 @@ onMounted(async () => {
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700&display=swap');
 
 .stat-genre {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  text-align: center;
+  font-family: "Plus Jakarta Sans", sans-serif;
   color: #181818;
-  margin-top: 20px;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: center;
 }
 
 .chart-container {
-  width: 60%;
+  width: 100%;
   margin: 0 auto;
   padding: 20px;
   background-color: #FFFFFF;

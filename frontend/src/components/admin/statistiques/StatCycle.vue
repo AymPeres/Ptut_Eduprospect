@@ -59,7 +59,7 @@ onMounted(async () => {
             interestCounts.value['cycle-prepa'],
             interestCounts.value['Cycle ingénieur']
           ],
-          backgroundColor: ['#3498db', '#e74c3c'], // Ajuste les couleurs si besoin
+          backgroundColor: ['#9059a0', '#ed6962'], // Ajuste les couleurs si besoin
           borderWidth: 1,
         },
       ],
@@ -83,14 +83,17 @@ onMounted(async () => {
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700&display=swap');
 
 .stat-interet {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  text-align: center;
+  font-family: "Plus Jakarta Sans", sans-serif;
   color: #181818;
-  margin-top: 20px;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: center;
 }
 
 .chart-container {
-  width: 60%;
+  width: 100%;
   margin: 0 auto;
   padding: 20px;
   background-color: #FFFFFF;

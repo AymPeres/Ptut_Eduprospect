@@ -65,11 +65,12 @@ async function updateChart() {
 
   // Couleurs définies pour chaque segment
   const backgroundColor = [
-    '#FF5733', // Bouche à oreille
-    '#33FF57', // Site web
-    '#3357FF', // Réseaux sociaux
-    '#F4C342', // Salons
+    '#9059a0', // Bouche à oreille
+    '#ed6962', // Site web
+    '#2f2769', // Réseaux sociaux
+    '#5f4e9b', // Salons
     '#9C27B0'  // Autre
+
   ]
 
   // Récupère le contexte du canvas
