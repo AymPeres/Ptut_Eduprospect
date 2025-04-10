@@ -13,12 +13,10 @@ const router = createRouter({
         },
         {
           path: 'formulaire',
-          // Ce composant parent charge Navigation2 + un <router-view/>
           name: 'FormulaireRoot',
           component: () => import('@/pages/formulaire/Formulaire.vue'),
         },
         {
-          // Route dynamique avec un param :salon
           path: ':salon',
           component: () => import('@/pages/formulaire/FormulaireGlobal.vue'),
           children: [

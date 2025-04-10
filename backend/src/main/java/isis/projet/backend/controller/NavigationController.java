@@ -15,7 +15,6 @@ public class NavigationController {
     @Autowired
     private SalonService salonService;
 
-    // Récupérer toutes les années disponibles
     @GetMapping("/annees")
     public ResponseEntity<List<Integer>> getAllAnnees() {
         List<Integer> annees = salonService.getAllAnnees();

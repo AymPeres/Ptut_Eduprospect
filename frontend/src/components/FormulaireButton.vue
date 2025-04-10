@@ -1,5 +1,4 @@
 <template>
-  <!-- Utilise un <router-link> pour naviguer vers ta page formulaire -->
   <router-link to="/formulaire" class="formulaire-button">
     Espace Formulaire
   </router-link>

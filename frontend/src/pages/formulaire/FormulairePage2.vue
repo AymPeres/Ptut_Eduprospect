@@ -73,7 +73,6 @@ function handlePopState() {
 }
 
 onMounted(() => {
-  // Ajoute un nouvel état dans l'historique pour pouvoir intercepter le retour
   history.pushState(null, document.title, location.href);
   window.addEventListener("popstate", handlePopState);
 });

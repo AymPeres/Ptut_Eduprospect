@@ -1,7 +1,6 @@
 <template>
   <footer class="footer">
     <div class="footer-content">
-      <!-- Partie gauche : Logo ISIS -->
 
       <div class="partners-left">
         <img src="@/assets/images/logoIsis/logo-ISIS-horizontal-RVB.svg" alt="logo isis" class="partner-logo-isis" />
@@ -15,7 +14,6 @@
 
       <p>© 2025 Tous droits réservés - Eduprospect</p>
 
-      <!-- Partie droite : Logos Inuc et Insa dans des div séparées -->
       <div class="partners-right">
         <div class="partner-logo-inuc">
           <img src="@/assets/images/logoInuc/horizontal/LOGO-UC-horizontal-Bichro-fondclair.png" alt="logo inuc" class="partner-logo-other" />

@@ -14,11 +14,11 @@
       />
     </div>
 
-    <!-- Exemple d'un menu contextuel pour supprimer -->
+
     <div v-if="showContextMenu" class="context-menu" :style="{ top: contextMenuPosition.y + 'px', left: contextMenuPosition.x + 'px' }">
       <ul>
         <li @click="deleteItem">Supprimer</li>
-        <!-- Tu peux ajouter d'autres actions ici -->
+
       </ul>
     </div>
   </div>
@@ -56,9 +56,9 @@ export default {
     },
     deleteItem() {
       this.showContextMenu = false
-      // Appel à l'API pour supprimer l'item
+
       this.$emit('refresh', { action: 'delete', id: this.item.id })
-      // Tu peux intégrer ici axios.delete(...) et ensuite rafraîchir l'arbre
+
     },
     emitRefresh() {
       this.$emit('refresh')

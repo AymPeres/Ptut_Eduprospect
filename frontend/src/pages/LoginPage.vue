@@ -29,7 +29,6 @@ import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import HomeButton from "@/components/formulaire/HomeButton.vue";
 
-// Variables réactives
 const password = ref('');
 const error = ref(null);
 const router = useRouter();
@@ -39,7 +38,6 @@ const login = async () => {
   try {
     error.value = null;
 
-    // Appel à votre API d'authentification
     const response = await fetch('/api/login', {
       method: 'POST',
       headers: {
@@ -56,10 +54,8 @@ const login = async () => {
 
     const data = await response.json();
 
-    // Stockez le token dans localStorage ou sessionStorage
     localStorage.setItem('authToken', data.token);
 
-    // Redirection vers la page admin
     router.push('/admin');
   } catch (err) {
     error.value = err.message || 'Erreur lors de la connexion';
@@ -67,7 +63,6 @@ const login = async () => {
   }
 };
 
-// Fonction pour revenir à la page précédente
 const goBack = () => {
   router.back();
 };
@@ -77,7 +72,6 @@ const goBack = () => {
 /* 1) Import de la police Plus Jakarta Sans */
 @import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700&display=swap");
 
-/* 2) Conteneur global : on centre verticalement et horizontalement */
 .login-container {
   display: flex;
   flex-direction: column;

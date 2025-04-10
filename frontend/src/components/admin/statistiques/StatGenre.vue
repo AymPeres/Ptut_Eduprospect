@@ -21,7 +21,6 @@ async function fetchInscriptions() {
     if (!response.ok) {
       throw new Error(`HTTP error: ${response.status}`)
     }
-    // Supposons que l'API renvoie un tableau d'objets avec la propriété "sexe"
     inscriptions.value = await response.json()
   } catch (err) {
     console.error("Erreur lors de la récupération des inscriptions:", err)
@@ -36,7 +35,6 @@ const genreCounts = computed(() => {
     Autre: 0,
   }
   inscriptions.value.forEach((inscription) => {
-    // Normaliser ou adapter selon les valeurs réelles (ex. "homme", "femme", etc.)
     if (inscription.sexe === 'Homme') counts.Homme++
     else if (inscription.sexe === 'Femme') counts.Femme++
     else counts.Autre++
@@ -48,7 +46,7 @@ onMounted(async () => {
   // Récupère d'abord les inscriptions
   await fetchInscriptions()
 
-  // Crée le graphique une fois que les inscriptions sont chargées
+
   const ctx = document.getElementById('genreChart').getContext('2d')
   new Chart(ctx, {
     type: 'pie',

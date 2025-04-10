@@ -68,7 +68,6 @@ const props = defineProps({
 })
 const emit = defineEmits(['go-next'])
 
-// Création d'une copie locale pour la page 1
 const localData = reactive({ ...props.inscriptionData })
 
 function validerEtContinuer() {
@@ -76,7 +75,6 @@ function validerEtContinuer() {
   emit('go-next', localData)
 }
 
-// Intercepter le bouton retour du navigateur
 function handlePopState() {
   const pwd = prompt("Entrez le mot de passe pour quitter cette page :")
   if (pwd === "1234") {

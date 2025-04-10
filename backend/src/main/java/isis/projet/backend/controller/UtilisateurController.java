@@ -25,7 +25,6 @@ public class UtilisateurController {
         Utilisateur user = authService.authenticate(loginRequest.getPassword());
 
         if (user != null) {
-            // Générer un token JWT (implémentez la logique réelle ici)
             String token = generateToken(user);
             return ResponseEntity.ok(new LoginResponse(token, user.getEmail()));
         } else {
@@ -33,9 +32,7 @@ public class UtilisateurController {
         }
     }
 
-    // Méthode à implémenter pour générer un token JWT
     private String generateToken(Utilisateur utilisateur) {
-        // Implémentez cette méthode selon votre méthode d'authentification (ex. via jjwt)
         return "jwt";
     }
 }

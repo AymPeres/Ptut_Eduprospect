@@ -21,7 +21,6 @@ public class InscriptionService {
         return inscriptionRepository.findBySalonId(salonId);
     }
 
-    // Ajout de la méthode manquante pour créer une inscription
     public Inscription createInscription(Inscription inscription) {
         return inscriptionRepository.save(inscription);
     }

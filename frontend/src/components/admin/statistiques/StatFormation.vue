@@ -11,7 +11,6 @@
 import { ref, computed, onMounted } from 'vue'
 import { Chart } from 'chart.js/auto'
 
-// Variable réactive pour stocker les inscriptions récupérées depuis l'API
 const inscriptions = ref([])
 
 // Fonction pour récupérer les inscriptions via l'API
@@ -28,11 +27,10 @@ async function fetchInscriptions() {
   }
 }
 
-// Calcule le nombre d'inscriptions par formation de manière dynamique
+// Calcule le nombre d'inscriptions par formation
 const formationCounts = computed(() => {
   const counts = {}
   inscriptions.value.forEach(inscription => {
-    // On vérifie que l'attribut "formation" existe et n'est pas vide
     if (inscription.formation) {
       // On retire les espaces en début et fin
       const formation = inscription.formation.trim()

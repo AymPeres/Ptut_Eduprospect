@@ -6,10 +6,8 @@
     <div class="content">
       <p>Espace administrateur</p>
     </div>
-    <!-- Affichage de la navigation avec propagation de l'événement -->
     <Navigation @salon-chosen="handleSalonChosen" />
 
-    <!-- Bouton pour afficher/cacher le formulaire d'ajout -->
     <button class="toggle-add-salon" @click="toggleAddSalon">
       Ajouter un salon
     </button>
@@ -24,10 +22,8 @@ import { ref } from 'vue'
 import Navigation from '@/components/Navigation.vue'
 import AddSalon from '@/components/AddSalon.vue'
 
-// On définit l'émission de l'événement "salon-chosen" pour le parent
 const emit = defineEmits(['salon-chosen'])
 
-// Variable réactive pour contrôler l'affichage du formulaire d'ajout
 const showAddSalon = ref(false)
 
 // Fonction pour basculer la visibilité du formulaire d'ajout

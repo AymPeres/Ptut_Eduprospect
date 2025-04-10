@@ -18,9 +18,7 @@ import { Chart } from 'chart.js/auto'
 
 // Stocke les inscriptions récupérées depuis l'API
 const inscriptions = ref([])
-// Critère sélectionné (par défaut "ville")
 const selectedCriterion = ref('ville')
-// Référence vers le graphique
 const chart = ref(null)
 
 // Fonction pour récupérer les inscriptions via l'API
@@ -37,18 +35,16 @@ async function fetchInscriptions() {
   }
 }
 
-// Calcule le nombre de prospects selon le critère choisi
+// Calcule le nombre de prospects
 function countProspectsByCriterion(criterion) {
   const counts = {}
 
   inscriptions.value.forEach(inscription => {
     let key = ''
     if (criterion === 'ville') {
-      // Pour le critère "ville", utiliser la propriété `ville` de l'inscription (renseignée par l'étudiant)
       key = inscription.ville ? inscription.ville.trim() : 'Non spécifiée'
     }
     else if (criterion === 'annee') {
-      // Pour "annee", on recherche dans l'objet 'salon' le champ 'annee'
       const data = inscription.salon
       if (data && data.annee) {
         key = data.annee.toString()
@@ -57,7 +53,6 @@ function countProspectsByCriterion(criterion) {
       }
     }
     else if (criterion === 'salon') {
-      // Pour "salon", utiliser par exemple le champ 'nom' dans l'objet 'salon'
       const data = inscription.salon
       if (data && data.nom) {
         key = data.nom.trim()

@@ -11,7 +11,6 @@
 import { ref, computed, onMounted } from 'vue'
 import { Chart } from 'chart.js/auto'
 
-// Stocke les inscriptions (ou prospects) récupérées depuis l'API
 const inscriptions = ref([])
 
 // Fonction pour récupérer les inscriptions via l'API
@@ -21,7 +20,6 @@ async function fetchInscriptions() {
     if (!response.ok) {
       throw new Error(`HTTP error: ${response.status}`)
     }
-    // On attend ici que l'API renvoie un tableau d'objets comportant la propriété "statut"
     inscriptions.value = await response.json()
   } catch (err) {
     console.error("Erreur lors de la récupération des inscriptions:", err)
@@ -32,7 +30,6 @@ async function fetchInscriptions() {
 const statutCounts = computed(() => {
   const counts = {}
   inscriptions.value.forEach(inscription => {
-    // On vérifie que la propriété "statut" est définie
     if (inscription.statut !== undefined && inscription.statut !== null) {
       counts[inscription.statut] = (counts[inscription.statut] || 0) + 1
     }
@@ -43,11 +40,9 @@ const statutCounts = computed(() => {
 onMounted(async () => {
   await fetchInscriptions()
 
-  // Récupère le contexte du canvas du graphique
   const ctx = document.getElementById('statutChart').getContext('2d')
   const dataCounts = statutCounts.value
 
-  // Prépare les labels et valeurs
   const labels = Object.keys(dataCounts)
   const values = labels.map(label => dataCounts[label])
 
@@ -73,7 +68,7 @@ onMounted(async () => {
       },
       plugins: {
         legend: {
-          display: false // On masque la légende si non nécessaire
+          display: false
         },
         tooltip: {
           enabled: true,

@@ -21,7 +21,6 @@ async function fetchInscriptions() {
     if (!response.ok) {
       throw new Error(`HTTP error: ${response.status}`)
     }
-    // On s'attend ici à ce que chaque inscription possède la propriété "interet"
     inscriptions.value = await response.json()
   } catch (err) {
     console.error("Erreur lors de la récupération des inscriptions:", err)
@@ -43,7 +42,7 @@ const interestCounts = computed(() => {
 })
 
 onMounted(async () => {
-  // Récupère d'abord les inscriptions
+  // Récupère les inscriptions
   await fetchInscriptions()
 
   // Création du graphique une fois les données chargées

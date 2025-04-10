@@ -13,7 +13,6 @@
 
     <!-- Zone principale -->
     <div class="main-content">
-      <!-- Affiche le tableau UNIQUEMENT si un salon est sélectionné -->
       <InscriptionsTable
         v-if="selectedSalon"
         :salon="selectedSalon"
@@ -29,10 +28,8 @@ import FooterGestion from "@/components/admin/FooterGestion.vue"
 import DisconnectButton from "@/components/admin/DisconnectButton.vue"
 import InscriptionsTable from "@/components/admin/InscriptionsTable.vue"
 
-// On stocke ici le salon actuellement choisi
 const selectedSalon = ref(null)
 
-// Quand la sidebar nous dit qu’un salon a été choisi
 function onSalonChosen(salon) {
   selectedSalon.value = salon
 }

@@ -49,7 +49,6 @@ const modeConnaissanceCounts = computed(() => {
     'Autre': 0
   }
   inscriptions.value.forEach((inscription) => {
-    // On prend la valeur reçue ou "autre" par défaut
     const origineValue = inscription.origineContact || 'autre'
     const label = valueToLabelMap[origineValue] || 'Autre'
     counts[label]++
@@ -73,10 +72,8 @@ async function updateChart() {
 
   ]
 
-  // Récupère le contexte du canvas
   const ctx = document.getElementById('connaitreIsisChart').getContext('2d')
 
-  // Si une instance de graphique existe, la détruire avant de recréer une nouvelle instance
   if (chartInstance) {
     chartInstance.destroy()
   }
@@ -121,7 +118,6 @@ onMounted(async () => {
   await updateChart()
 })
 
-// Expose updateChart() pour qu'il soit accessible depuis le parent
 defineExpose({ updateChart })
 </script>
 

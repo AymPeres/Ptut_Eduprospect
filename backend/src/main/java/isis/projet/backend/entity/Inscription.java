@@ -47,11 +47,9 @@ public class Inscription {
     @JoinColumn(name = "salon_id")
     private Salon salon;
 
-    // Constructeur par défaut
     public Inscription() {
     }
 
-    // Constructeur avec paramètres
     public Inscription(String nom, String prenom, String formation, String ville, String codePostal,
                        String email, String telephone, String sexe, String statut, String interet,
                        String origineContact, Salon salon) {
