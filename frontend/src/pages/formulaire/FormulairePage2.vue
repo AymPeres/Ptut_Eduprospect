@@ -12,7 +12,7 @@
     <select id="interet" v-model="inscriptionData.interet" required>
       <option value="" disabled selected>Sélectionnez un intérêt</option>
       <option value="cycle-prepa">Cycle préparatoire</option>
-      <option value="cycle-ingenieur">Cycle ingénieur</option>
+      <option value="Cycle ingénieur">Cycle ingénieur</option>
     </select>
 
     <label for="statut">Sous statut :</label>
